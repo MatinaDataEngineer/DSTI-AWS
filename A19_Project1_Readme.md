@@ -22,7 +22,7 @@ Create an AWS Architecture, consisting of 1 VPC, 3 Instances, 1 Internet Gateway
 1. On the pop-up that appears we click "Continue"
 1. We click on "AWS" Console and we open that pop-up
 
-### Step 1: create a VPC in 1 Region (e.g in US N.Virginia: us-east-1)
+### Step 1: Create a VPC in 1 Region (e.g in US N.Virginia: us-east-1)
 1. Select that Region from the upper right corner of AWS Management Console
 2. From the Services search box click on VPC and then from the left tab click on "Your VPCs" and finally click the upper button "Create VPC"
 	i. Name tag: DSTI_A19_Project1
@@ -33,10 +33,10 @@ Create an AWS Architecture, consisting of 1 VPC, 3 Instances, 1 Internet Gateway
     i. Name tag: PublicSubnet1_A19_P1
 	ii. VPC: we select the ID for the DSTI_A19_Project1 VPC
 	iii. IPv4 CIDR block: 14.80.0.0/24 256 IPs (5 of which are reserved and unusable) IP range between 14.80.0.0 and 14.80.0.255
-	iv. We click on Create and finally on Close
+	iv. Click on Create and finally on Close
 
-### Step 3: create the Internet Gateway	attached to VPC		
-1. We click on "Internet Gateways" from the left tab and then on "Create internet gateway"
+### Step 3: Create the Internet Gateway	attached to VPC		
+1. Click on "Internet Gateways" from the left tab and then on "Create internet gateway"
 i. Name tag:  IGW_A19_P1
 ii. Click on Create
 1. It is detouched.  So, click on the menu button "Actions" and click "Attach to VPC". Then we select the ID for the DSTI_A19_Project1 VPC
@@ -50,7 +50,7 @@ ii. Target: Internet Gateway and then we select  IGW_A19_P1
 1. Click on "save routes" and Close
 
 ### Step 5: Create the Private Subnet
-1. We click on "Subnets" from the left tab and then on the button "Create Subnet"
+1. Click on "Subnets" from the left tab and then on the button "Create Subnet"
 i. Name tag: PrivateSubnet1_A19_P1
 ii. VPC: select the ID for the DSTI_A19_Project1 VPC
 iii. IPv4 CIDR block: 14.80.2.0/23 IP range between 14.800.2.0 and 14.80.3.255
@@ -73,6 +73,7 @@ iii. Choose t2.micro instance type
 1.  Click on the button "Add Storage" accept the defaults and click on the button "Add Tags"
 1. Click on the button "Add Tag" and give values for Key: Name and for Value:  JB_A19_P1
 1. In the step "Configure Security Group" select "Create a new security group" and name it: SSH_SG_A19_P1 and allow SSH connections over TCP on port 22 from anywhere:
+![Alt text](/Bastion.png?raw=true "Bastion")
 1. Click on Review and Launch
 1. Click on Launch
 1. In the pop-up window select to Create a new key pair and name it: A19_Project1 and click on the "Download Key Pair"
@@ -89,6 +90,7 @@ ii. Select the first one
 1. Click on the button "Add Storage" accept the defaults and click on the button "Add Tags"
 1. Click on the button "Add Tag" and give values for Key: Name and for Value:  NAT_A19_P1
 1. In the step "Configure Security Group" select "Create a new security group" and name it: PING_SG_A19_P1 and allow ICMTP traffic from anywhere:
+![Alt text](/NAT.png?raw=true "NAT")
 1.Click on Review and Launch
 1. Click on Launch
 1. In the pop-up window select to Choose an existing key pair: A19_Project1 and click on the checkbox
@@ -105,11 +107,12 @@ ii. Select the first one
 1. Click on the button "Add Storage" accept the defaults and click on the button "Add Tags"
 1. Click on the button "Add Tag" and give values for Key: Name and for Value:  FI_A19_P1
 1. In the step "Configure Security Group" select "Create a new security group" and name it: PING_SG_A19_P1 and allow All traffic from within our VPC CIDR range:14.80.0.0/20
+![Alt text](/FI.png?raw=true "FI")
 1. Click on Review and Launch
 1. Click on Launch
 1. In the pop-up window select to Choose an existing key pair: A19_Project1 and click on the checkbox
 1. And finally click on the button "Launch Instances"
-		xiv. Note this NAT instance ID: i-0e1c24a2937b8a993 
+xiv. Note this NAT instance ID: i-0e1c24a2937b8a993 
 
 ### Step 8: Evaluate the Design by pinging Google.com from the "FI" instance
 We need to connect to the instance FI. Based on our Architecture we can do it through the Bastion Server, firstly we need to ssh to the Bastion Server and then from there we need to ssh to the FI Instance
@@ -133,7 +136,7 @@ Ping google.com
 ```
 			
 Here are the results for the validation:
+
+![Alt text](/Results.png?raw=true "results")
 			
-SUCCESS!
-We issue twice the command "exit" in the terminal to close our ssh connections.
-We now stop the instances we have created in order not to incur unwanted billing.
+1. SUCCESS! Issue twice the command "exit" in the terminal to close our ssh connections and stop the instances we have created in order not to incur unwanted billing.
