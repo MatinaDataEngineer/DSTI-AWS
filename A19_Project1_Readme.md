@@ -1,7 +1,7 @@
 # A19 Project1
 ## Objective 
 Create an AWS Architecture, consisting of 1 VPC, 3 Instances, 1 Internet Gateway using free tier in which:
-2 Instances are in the Public Subnet (one of which is the Jump Box "JB" and the other one the NAT instance "NAT") and 1 Instance "FI" is in the Private Subnet
+2 Instances are in the Public Subnet (one of which is the Jump Box "JB" and the other one the NAT instance "NAT") and 1 Instance "FI" is in the Private Subnet. This final instance "FI" should be able to ping google.com and receive reply.
 
 ## Architectural approach
 ![Alt text](/P1Diagram.png?raw=true "Diagram")
