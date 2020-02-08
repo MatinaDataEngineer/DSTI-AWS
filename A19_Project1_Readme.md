@@ -1,9 +1,11 @@
 # A19 Project1
 ## Objective 
 Create an AWS Architecture, consisting of 1 VPC, 3 Instances, 1 Internet Gateway using free tier in which:
-1. 2 Instances are in the Public Subnet (one of which is the Jump Box "JB" and the other one the NAT instance "NAT") and 1 Instance "FI" is in the Private Subnet
+2 Instances are in the Public Subnet (one of which is the Jump Box "JB" and the other one the NAT instance "NAT") and 1 Instance "FI" is in the Private Subnet
 
 ## Architectural approach
+![Alt text](/P1Diagram.png?raw=true "Diagram")
+
 * We will use 1 Region and 1 Availability Zone within it
 * There will be 1 VPC with the following IP Range: 14.80.0.0/20, which means this VPC includes 4,096 IPs between 14.80.0.0 and 14.80.15.255
 * We will attach an Internet Gateway to the VPC
@@ -28,7 +30,8 @@ Create an AWS Architecture, consisting of 1 VPC, 3 Instances, 1 Internet Gateway
 	i. Name tag: DSTI_A19_Project1
     ii. IPv4 CIDR block: 14.80.0.0/20, which means this VPC includes 4,096 IPs between 14.80.0.0 and 14.80.15.255
 	iii. We click on Close
-### Step 2: create the Public Subnet
+	
+### Step 2: Create the Public Subnet
 1. Click on "Subnets" from the left tab and then on the button "Create Subnet"
     i. Name tag: PublicSubnet1_A19_P1
 	ii. VPC: we select the ID for the DSTI_A19_Project1 VPC
