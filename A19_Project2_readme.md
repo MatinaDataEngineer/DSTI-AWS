@@ -1,8 +1,8 @@
 # A19 Project2
 ## Objective 
-Create a private RDS MySQL instance in the private subnet of the AWS architecture of [A19_Project1(/A19_Project1_Readme.md), connect using Python, insert data and display it. (we added an optional step to use MySQL client for the same)
+Create a private RDS MySQL instance in the private subnet of the AWS architecture of [A19_Project1](/A19_Project1_Readme.md), connect using Python, insert data and display it. (we added an optional step to use MySQL client for the same)
 
-### Step 0: Start the instances of [A19_Project1(/A19_Project1_Readme.md) and note the IP addresses of the JB and of the FI instances
+### Step 0: Start the instances of [A19_Project1](/A19_Project1_Readme.md) and note the IP addresses of the JB and of the FI instances
 
 ### Step 1: Create and configure the MySQL RDS
 1. From the Services select **RDS** and then we Select from the left **Databases**
