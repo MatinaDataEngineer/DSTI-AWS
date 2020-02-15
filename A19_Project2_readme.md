@@ -1,17 +1,8 @@
 # A19 Project2
 ## Objective 
-1. Create a public RDS MySQL-compatible Aurora cluster and connect to it using any web interface (SQL Workbench). Add data using SQL and display it.
-2. Create a private RDS MySQL instance in the private subnet of the AWS architecture of Project1, connect using Python, insert Data and display it.
+Create a private RDS MySQL instance in the private subnet of the AWS architecture of [A19_Project1(/A19_Project1_Readme.md), connect using Python, insert data and display it. (we added an optional step to use MySQL client for the same)
 
-## Steps for Objective #1: Public MySQL-compatible Aurora cluster
-##-----------------------------------------------------------------------
-
-### Step 1: Create a VPC in 1 Region (e.g in US N.Virginia: us-east-1)
-
-
-
-## Steps for Objective #2: Private MySQL instance
-##-----------------------------------------------------------------------
+### Step 0: Start the instances of [A19_Project1(/A19_Project1_Readme.md) and note the IP addresses of the JB and of the FI instances
 
 ### Step 1: Create and configure the MySQL RDS
 1. From the Services select **RDS** and then we Select from the left **Databases**
@@ -36,12 +27,12 @@
 	  - AZ: choose a different AZ: **us-east-1b**
     - CIDR: **11.80.4.0/23**
 6. Now go back to the previous tab with the error message and click again the button "Create Database"
-![Alt text](pics/DB1.png?raw=true "DB1")
+	![Alt text](pics/DB1.png?raw=true "DB1")
 
 ### Step 2: Add a route to the MySQL RDS from the FI Instance
 1. Change the Inbound rules of the DB Security Group by adding the rule:
-- Type: MYSQL/Aurora, TCP, 3306 from the Security Group of the FI instance:
-![Alt text](pics/SG_Change.png?raw=true "SG")
+	- Type: MYSQL/Aurora, TCP, 3306 from the Security Group of the FI instance:
+	![Alt text](pics/SG_Change.png?raw=true "SG")
 
 ### Step 3: Connect to the FI Instance (over the Jump Box)
 1. We issue the following command to shh to the Bastion Server (the pem key is saved in the Downloads folder):
@@ -59,17 +50,17 @@
 	sudo yum update
 	sudo yum install -y https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
 	sudo yum install -y mysql-community-client
-	Mysql --version
+	mysql --version
 	mysql -u admin -p -h dbmysqla19p2.cuzs16qcrkta.us-east-1.rds.amazonaws.com
 	```
 2. Using MySQL client we connect to the RDS instance using the admin user and the Endpoint URL (you need to type the password when it asks):
 	```sh
 	mysql -u admin -p -h dbmysqla19p2.cuzs16qcrkta.us-east-1.rds.amazonaws.com
 	```
-  ![Alt text](pics/mysql_client_conn.png?raw=true "MySQLClient")
+  	![Alt text](pics/mysql_client_conn.png?raw=true "MySQLClient")
   
 3. We issue the following SQL commands to create data:
-   - [sql_test.sql](sqlscripts/sql_test.py)
+   	- [test.sql](sqlscripts/test.sql)
    
 4. We issue the following SQL command to retrieve data:
 	```sh
@@ -84,7 +75,7 @@
 	```
 2. We install a second component PyMSQL we found documented here: https://docs.aws.amazon.com/lambda/latest/dg/services-rds-tutorial.html
 	```sh
-		Sudo python3 -m pip install PyMySQL
+		sudo python3 -m pip install PyMySQL
 	```
 3. We create a folder for our python scripts and we save these 2 python scripts
   - [A19test.py](pythonscripts/A19test.py)  (make sure to use your own SQL)
