@@ -25,7 +25,7 @@ Create a private RDS MySQL instance in the private subnet of the AWS architectur
 	  	- Name tag: **Private_Subnet_SlaveDB**
 	  	- VPC: **VPC_A19P1**
 	 	- AZ: choose a different AZ: **us-east-1b**
-    		- CIDR: **11.80.4.0/23**
+		- CIDR: **11.80.4.0/23**
 6. Now go back to the previous tab with the error message and click again the button "Create Database"
 	![Alt text](pics/DB1.png?raw=true "DB1")
 
@@ -51,7 +51,6 @@ Create a private RDS MySQL instance in the private subnet of the AWS architectur
 	sudo yum install -y https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
 	sudo yum install -y mysql-community-client
 	mysql --version
-	mysql -u admin -p -h dbmysqla19p2.cuzs16qcrkta.us-east-1.rds.amazonaws.com
 	```
 2. Using MySQL client we connect to the RDS instance using the admin user and the Endpoint URL (you need to type the password when it asks):
 	```sh
