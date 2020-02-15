@@ -39,14 +39,25 @@ Add data using SQL and display it.
   - Regional 
   - Choose **Parallel Query** (one writer and multiple readers)
   - DB CLUSTER identifier: **DBPUBMYSQLA19P2**
-  	  -	Master username: **admin** and password: admin1234
+  	-	Master username: **admin** and password: admin1234
  	-	Connectivity: Select the **VPC_DB_A19**
  	-	Create new DB Subnet Group, **Publicly accessible**
  	-	Create new Security Group: **SG_DB_Public_A19**
  	-	Availability zone: **us-east-1a**
  	-	(Database port: 3306)
  	-	Password authentication
-  - DB Instance identifier: **DBPUBMYSQLA19P2-1**
+    -   DB Instance identifier: **DBPUBMYSQLA19P2-1**
  	-	Initial database name: **playgroundA19**
  	-	Backup retention period: 1 day
 1. Disable deletion protection and Click on the button "Create Database"
+
+### Step 6: Connect to the RDS and Issue SQL commands
+1. Download and Install the SQL tool: MySQL Workbench from: https://dev.mysql.com/downloads/workbench/
+2. Note the Endpoint name of your launched RDS instance: dbpubmysqla19p2.cluster-cuzs16qcrkta.us-east-1.rds.amazonaws.com
+3. In the connection string, you typically use the host and port information from special endpoints associated with the DB cluster. (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Connecting.html)
+4.  ![Alt text](pics/MySQL_conn.png?raw=true "conn")
+5. We issue the following SQL commands to create data:
+   	- [test.sql](sqlscripts/test.sql)
+6. We issue the following SQL command to retrieve data:
+    - ![Alt text](pics/mysql_query.png?raw=true "query")
+
