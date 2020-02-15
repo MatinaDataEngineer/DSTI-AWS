@@ -36,7 +36,7 @@ sudo su
 passwd ec2-user
 ```
 Now, you will be able to open up a browser from your PC and open the RStudio Server by giving your Instance public IP address and the port 8787, where Rserver operates: e.g.: 3.226.30.36:8787
-![Alt text](/RServerLogin.png?raw=true "RServerLogin")
+![Alt text](pics/RServerLogin.png?raw=true "RServerLogin")
 
 In the Login Page, provide the user: ec2-user and the password you had just set and click on Login
-![Alt text](/RServerSuccess.png?raw=true "RServerSuccess")
+![Alt text](pics/RServerSuccess.png?raw=true "RServerSuccess")
