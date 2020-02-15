@@ -36,9 +36,9 @@ Add data using SQL and display it.
 1. From the Services select **RDS** and then we Select from the left **Databases**
 1. Click on "Create Database" button
 1. Pick "Standard Create", **Amazon Aurora with MySQL compatibility**
-  - Regional 
-  - Choose **Parallel Query** (one writer and multiple readers)
-  - DB CLUSTER identifier: **DBPUBMYSQLA19P2**
+    - Regional 
+    - Choose **Parallel Query** (one writer and multiple readers)
+    - DB CLUSTER identifier: **DBPUBMYSQLA19P2**
   	-	Master username: **admin** and password: admin1234
  	-	Connectivity: Select the **VPC_DB_A19**
  	-	Create new DB Subnet Group, **Publicly accessible**
@@ -55,9 +55,9 @@ Add data using SQL and display it.
 1. Download and Install the SQL tool: MySQL Workbench from: https://dev.mysql.com/downloads/workbench/
 2. Note the Endpoint name of your launched RDS instance: dbpubmysqla19p2.cluster-cuzs16qcrkta.us-east-1.rds.amazonaws.com
 3. In the connection string, you typically use the host and port information from special endpoints associated with the DB cluster. (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Connecting.html)
-4.  ![Alt text](pics/MySQL_conn.png?raw=true "conn")
-5. We issue the following SQL commands to create data:
+  ![Alt text](pics/MySQL_conn.png?raw=true "conn")
+4. We issue the following SQL commands to create data:
    	- [test.sql](sqlscripts/test.sql)
-6. We issue the following SQL command to retrieve data:
+5. We issue the following SQL command to retrieve data:
     - ![Alt text](pics/mysql_query.png?raw=true "query")
 
