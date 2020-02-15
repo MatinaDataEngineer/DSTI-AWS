@@ -4,7 +4,7 @@ Create an AWS Architecture, consisting of 1 VPC, 3 Instances, 1 Internet Gateway
 2 Instances are in the Public Subnet (one of which is the Jump Box "JB" and the other one the NAT instance "NAT") and 1 Instance "FI" is in the Private Subnet. This final instance "FI" should be able to ping google.com and receive reply.
 
 ## Architectural approach
-![Alt text](/P1Diagram.png?raw=true "Diagram")
+![Alt text](pics/P1Diagram.png?raw=true "Diagram")
 
 * We will use 1 Region and 1 Availability Zone within it
 * There will be 1 VPC with the following IP Range: **11.80.0.0/20**, which means this VPC includes 4,096 IPs between 11.80.0.0 and 11.80.15.255
@@ -79,7 +79,7 @@ Create an AWS Architecture, consisting of 1 VPC, 3 Instances, 1 Internet Gateway
 1. Click on the button "Add Storage" accept the defaults and click on the button "Add Tags"
 1. Click on the button "Add Tag" and give values for Key: Name and for Value:  **JB_A19P1**
 1. In the step "Configure Security Group" select "Create a new security group" and name it: **SG_JB_A19P1** and allow inbound SSH connections over TCP on port 22 from anywhere:
-![Alt text](/Bastion.png?raw=true "Bastion")
+![Alt text](pics/Bastion.png?raw=true "Bastion")
 1. Click on Review and Launch
 1. Click on Launch
 1. In the pop-up window select to Create a new key pair and name it: A19_Project1 and click on the "Download Key Pair"
@@ -94,7 +94,7 @@ Create an AWS Architecture, consisting of 1 VPC, 3 Instances, 1 Internet Gateway
 1. Click on the button "Add Storage" accept the defaults and click on the button "Add Tags"
 1. Click on the button "Add Tag" and give values for Key: Name and for Value:  **NAT_A19P1**
 1. In the step "Configure Security Group" select "Create a new security group" and name it: **SG_NAT_A19P1** and modify the existing rule to allow all traffic from the Private Subnet CIDR: 11.80.2.0/23:
-![Alt text](/NAT.png?raw=true "NAT")
+![Alt text](pics/NAT.png?raw=true "NAT")
 1. Click on Review and Launch
 1. Click on Launch
 1. In the pop-up window select to Choose an existing key pair: A19_Project1 and click on the checkbox
@@ -111,7 +111,7 @@ Create an AWS Architecture, consisting of 1 VPC, 3 Instances, 1 Internet Gateway
 1. Click on the button "Add Storage" accept the defaults and click on the button "Add Tags"
 1. Click on the button "Add Tag" and give values for Key: Name and for Value:  **FI_A19P1**
 1. In the step "Configure Security Group" select "Create a new security group" and name it: **SG_FI_A19P1** and modify the rule allow all traffic from the JumpBox instance Security Group (by typing sg and then selecting SG_JB_A19P1 from the drop down list)
-![Alt text](/FI.png?raw=true "FI")
+![Alt text](pics/FI.png?raw=true "FI")
 1. Click on Review and Launch
 1. Click on Launch
 1. In the pop-up window select to Choose an existing key pair: A19_Project1 and click on the checkbox
@@ -155,6 +155,6 @@ ping google.com
 			
 Here are the results for the validation:
 
-![Alt text](/Results.png?raw=true "results")
+![Alt text](pics/Results.png?raw=true "results")
 			
 **SUCCESS!** Issue twice the command "exit" in the terminal to close our ssh connections and stop the instances we have created in order not to incur unwanted billing.
