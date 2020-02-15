@@ -65,16 +65,16 @@ Create a private RDS MySQL instance in the private subnet of the AWS architectur
 	```sh
 	Select * from playgroundA19.test_A19;
 	```
-  ![Alt text](pics/SQL_Results1.png?raw=true "SQLResults1")
+  	![Alt text](pics/SQL_Results1.png?raw=true "SQLResults1")
 
 ### Step 5: Connect to the RDS using Python and perform SQL
 1. Being on the FI instance connected, we install Python:
 	```sh
-		sudo yum install python3
+	sudo yum install python3
 	```
 2. We install a second component PyMSQL we found documented here: https://docs.aws.amazon.com/lambda/latest/dg/services-rds-tutorial.html
 	```sh
-		sudo python3 -m pip install PyMySQL
+	sudo python3 -m pip install PyMySQL
 	```
 3. We create a folder for our python scripts and we save these 2 python scripts
   - [A19test.py](pythonscripts/A19test.py)  (make sure to use your own SQL)
@@ -84,6 +84,6 @@ Create a private RDS MySQL instance in the private subnet of the AWS architectur
 	chmod 777 pythonscripts/
 	cd pythonscripts
 	vim A19test.py
-  vim rds_config.py
-	```
+  	vim rds_config.py
+   ```
   ![Alt text](pics/python_results.png?raw=true "SQLResults1")
