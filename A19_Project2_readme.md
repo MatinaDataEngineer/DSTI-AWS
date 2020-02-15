@@ -1,6 +1,6 @@
 # A19 Project2
 ## Objective 
-Create a private RDS MySQL instance in the private subnet of the AWS architecture of [A19_Project1](/A19_Project1_Readme.md), connect using Python, insert data and display it. (we added an optional step to use MySQL client for the same)
+Create a private RDS MySQL instance in the private subnet of the AWS architecture of [A19_Project1](/A19_Project1_Readme.md), connect using Python, insert data and display it. (We added an optional step to use MySQL client for the same)
 
 ### Step 0: Start the instances of [A19_Project1](/A19_Project1_Readme.md) and note the IP addresses of the JB and of the FI instances
 
@@ -8,16 +8,16 @@ Create a private RDS MySQL instance in the private subnet of the AWS architectur
 1. From the Services select **RDS** and then we Select from the left **Databases**
 1. Click on "Create Database" button
 1. Pick "Standard Create", **MySQL**, MySQL Community, Free Tier
-  -	DB Instance identifier: **DBMYSQLA19P2**
-  -	Master username: **admin** and password: admin1234
-  -	Connectivity: Select the **VPC_A19P1**
-  -	Create new DB Subnet Group, Not Publicly accessible
-  -	Create new Security Group: **SG_DB_A19P2**
-  -	Availability zone: **us-east-1a**
-  -	(Database port: 3306)
-  -	Password and IAM database authentication
-  -	Initial database name: **playgroundA19**
-  -	Backup retention period: 1 day
+	- DB Instance identifier: **DBMYSQLA19P2**
+  	-	Master username: **admin** and password: admin1234
+ 	-	Connectivity: Select the **VPC_A19P1**
+ 	-	Create new DB Subnet Group, Not Publicly accessible
+ 	-	Create new Security Group: **SG_DB_A19P2**
+ 	-	Availability zone: **us-east-1a**
+ 	-	(Database port: 3306)
+ 	-	Password and IAM database authentication
+ 	-	Initial database name: **playgroundA19**
+ 	-	Backup retention period: 1 day
 4. Click on the button "Create Database"
 5. You get the Error: "DB Subnet Group doesn't meet availability zone coverage requirement. Please add subnets to cover at least 2 availability zones." 
   1. Open new tab, go to VPC service and Subnets
@@ -66,7 +66,7 @@ Create a private RDS MySQL instance in the private subnet of the AWS architectur
 	```sh
 	Select * from playgroundA19.test_A19;
 	```
-  ![Alt text](pics/SQL_Resuls1.png?raw=true "SQLResults1")
+  ![Alt text](pics/SQL_Results1.png?raw=true "SQLResults1")
 
 ### Step 5: Connect to the RDS using Python and perform SQL
 1. Being on the FI instance connected, we install Python:
