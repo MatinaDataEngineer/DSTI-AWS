@@ -20,18 +20,18 @@ Create a private RDS MySQL instance in the private subnet of the AWS architectur
  	-	Backup retention period: 1 day
 4. Click on the button "Create Database"
 5. You get the Error: "DB Subnet Group doesn't meet availability zone coverage requirement. Please add subnets to cover at least 2 availability zones." 
-  1. Open new tab, go to VPC service and Subnets
-	2. Create a new Subnet
-	  - Name tag: **Private_Subnet_SlaveDB**
-	  - VPC: **VPC_A19P1**
-	  - AZ: choose a different AZ: **us-east-1b**
-    - CIDR: **11.80.4.0/23**
+	1. Open a new tab, go to the VPC service and click on Subnets
+	2. Create a new Subnet:
+	  	- Name tag: **Private_Subnet_SlaveDB**
+	  	- VPC: **VPC_A19P1**
+	 	- AZ: choose a different AZ: **us-east-1b**
+    		- CIDR: **11.80.4.0/23**
 6. Now go back to the previous tab with the error message and click again the button "Create Database"
 	![Alt text](pics/DB1.png?raw=true "DB1")
 
 ### Step 2: Add a route to the MySQL RDS from the FI Instance
 1. Change the Inbound rules of the DB Security Group by adding the rule:
-	- Type: MYSQL/Aurora, TCP, 3306 from the Security Group of the FI instance:
+	- Type: **MYSQL/Aurora**, TCP, 3306 from the **Security Group of the FI instance**:
 	![Alt text](pics/SG_Change.png?raw=true "SG")
 
 ### Step 3: Connect to the FI Instance (over the Jump Box)
