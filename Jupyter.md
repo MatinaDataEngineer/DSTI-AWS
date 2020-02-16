@@ -152,23 +152,42 @@ If you want to terminate it, you need to type:  "jupyter notebook stop"
 			pew new matinapewclone
 			pip3 install -r matinapewenv.txt
 			python3 -m ipykernel install --user --name=MatinaPewEnv2
-		```sh
+		```
 2. Using **anaconda**
-		Pip3 install --user virtualenv
-		Python3 -m venv myenv
-		source myenv/bin/activate
-		a. Using ANACONDA (https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart)
-			i. Go to anaconda.com/distribution and copy the link for the latest anaconda distribution on linux: 
-			https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
-			ii. Open a terminal from the Jupyter browser
-			iii. Create a temp folder: 
-				1) mkdir tmp
-				2) cd tmp
-			iv. Download the latest anaconda version using:
+(https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart)
+	1. Go to anaconda.com/distribution and copy the link for the latest anaconda distribution on linux: 
+	    e.g. https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
+	2. Open a terminal from the Jupyter browser
+	3. Create a temp folder: 
+	```sh
+		 mkdir tmp
+		 cd tmp
+        ```sh
+	4. Download the latest anaconda version using:
+	```sh
 			curl -O https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
-			v. Execute the installation script after making ls:
+	```
+	5. Execute the installation script after making ls:
+	```sh
 			bash Anaconda3-2019.10-Linux-x86_64.sh
-			vi. df
-		b. 
+	```
+	6. Activate the installation with the following command: 
+	```sh
+		source ~/.bashrc
+	```
+	7. Use the conda command to test the installation and activation: conda list
+	```sh
+		conda list
+	```
+	8. Create an Anaconda environment of Python 2.7
+	```sh
+		conda create --name my_envP2.7 python=2.7
+	```
+	(Anaconda allows you to create a virtual environment with other version of Python)
+	9. Activate the Anaconda environment of Python 2.7
+	```sh
+		conda activate my_envP2.7
+	```
+
 		
 
