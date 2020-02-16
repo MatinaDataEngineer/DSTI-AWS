@@ -60,7 +60,6 @@ print('Hello, my name is Matina')
 1. Install Jupyter (https://jupyter.org/install)
 ```sh 
 		sudo pip3 install jupyter
-		#jupyterlab
 ```
 ### Step 6: Launch Jupyter
 ```sh 
@@ -96,7 +95,65 @@ The Jupyter remains accessible, even if the ssh terminal connections dies.
 (you could also find it if you do ls and then cat nohup.out)
 If you want to terminate it, you need to type:  "jupyter notebook stop"
 
-### Step 9: Create Virtual Environments (https://janakiev.com/blog/jupyter-virtual-envs/)
+### Step 9: Create Virtual Python Environments and add them in Jupyter Notebook
+1. Using **pew**
+	1. Open a new terminal in the Jupyter browser (menu New -> Terminal) and type:
+		```sh
+				pip3 install pew
+				pew new matinapew
+	        ```
+		![Alt text](pics/matinapew.png?raw=true "matinapew")
+	2. It takes you to that new launched environment. To get out, type: exit
+	3. To see which environments you have type: 
+		```sh
+				pew ls
+	        ```
+	4. To change to a virtual environment type:
+		```sh
+				pew workon matinapew
+	        ```
+	5. Install a new Python package
+		```sh
+	 		pip3 freeze #lists the python packages you have installed in your environment
+			pip3 install pandas
+			pip3 freeze #(pandas is shown)
+		```
+		![Alt text](pics/withpandas.png?raw=true "withpandas")	
+	6. Open a new terminal and create another environment:
+		```sh
+				pew new matinatf
+				pip3 freeze # no pandas is shown
+	        ```
+	7. Add those environments (link them) to the Jupyter Notebook:	
+		i. Go to matinapew virtual environment from the terminal and issue: 
+		```sh
+			pip3 install ipykernel
+			python3 -m ipykernel install --user --name=MatinaPewEnv
+		```
+		ii. Go to matinaptf virtual environment from the terminal and issue: 
+		```sh
+			pip3 install ipykernel
+			python3 -m ipykernel install --user --name=MatinaPewTf
+		```
+	        ![Alt text](pics/VEnvs.png?raw=true "VEnvs")
+		(after reloading the page)
+		Note that we work from the same file directory and Pew takes care of the python environment
+	8. Export you environment packages (from the matinapew virtual environment, which contains pandas) into a file:
+		```sh
+			pip3 freeze > matinapewenv.txt
+			cat matinapewenv.txt
+		```
+	9. Delete a virtual environment
+		```sh
+			pew rm matinatf
+		```
+	9. Create a new virtual environment as a clone of matinapewenv.txt:
+		```sh
+			pew new matinapewclone
+			pip3 install -r matinapewenv.txt
+			python3 -m ipykernel install --user --name=MatinaPewEnv2
+		```sh
+2. Using **anaconda**
 		Pip3 install --user virtualenv
 		Python3 -m venv myenv
 		source myenv/bin/activate
@@ -112,35 +169,6 @@ If you want to terminate it, you need to type:  "jupyter notebook stop"
 			v. Execute the installation script after making ls:
 			bash Anaconda3-2019.10-Linux-x86_64.sh
 			vi. df
-		b. Second option, using PEW
-			i. Open a new terminal in the Jupyter browser
-				pip3 install pew
-				pew
-				pew new matinapew
-				
-			ii. It takes you to that new launched environment. To get out, type: exit
-			iii. To see which environments you have type: ew ls
-			pew workon matinapew
-			iv. Create another environment in another terminal: matinatf
-			v. Now we will freeze:
-				Pip3 freeze. (lists the python packages you have installed in your environment)
-				Pip3 install pandas
-				Pip3 freeze (pandas is shown)
-		C. Link it with Jupyter:
-		i. We go to each of our virtual environment from the terminals and we issue: 
-			pip3 install ipykernel
-			python3 -m ipykernel install --user --name=MatinaPewEnv
-			
-		ii. (after reloading the page)
-		iii. Export you environment packages into a file:
-			 pip3 freeze > matinapewenv.txt
-			cat matinapewenv.txt
-	10. We work from the same file directory and Pew takes care of the python environment
-	11. Create a new environment as a clone of matinapewenv.txt
-		i. Open a new terminal
-		pew rm matinatf (this is how you delete an environment)
-		pew new matinapewclone
-		pip3 install -r matinapewenv.txt
-		python3 -m ipykernel install --user --name=MatinaPewEnv2
+		b. 
 		
 
