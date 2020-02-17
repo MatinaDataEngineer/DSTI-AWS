@@ -18,7 +18,7 @@ Create and manage Virtual Python Environments (using both PEW and ANACONDA) and 
 ### Step 2: Attach a Public IP to the Instance
 1. Click on Elastic Ips -> Allocate Elastic IP address
 2. Menu Actions -> Associate Elastic IP address -> Instance: **Jupiter_A19P3**
-3. Note the public IP is: *3.210.6.84*
+3. Note the public IP is: **3.210.6.84**
 
 ### Step 3: Connect to the Instance and test Python
 1. Connect with ssh to the instance
@@ -38,6 +38,7 @@ print('Hello, my name is Matina')
 You yould put it in a file and copy it over using scp (or WinSCP which needs to load the connection from Putty) (or CyberDuck)
 using as host: 3.210.6.84 and username: ubuntu with SFTP to port 22:
 ![Alt text](pics/CyberDuck.png?raw=true "CyberDuck")
+
 You can also use vi to type it into a file and execute it:
 ```sh 
 mkdir pythonscripts
@@ -49,21 +50,21 @@ print('Hello, my name is Matina')
 ```
 ![Alt text](pics/pythontest.png?raw=true "pythontest")
 		
-### Step 4: Install pip (after updating all the packages)   
-1. Install pip3 (Python package installer)
+### Step 4: Install pip    
+1. Install pip3 (Python package installer) *(after updating all the packages)*
 ```sh 
-	sudo apt-get update -y
-	sudo apt-get install python3-pip -y
+sudo apt-get update -y
+sudo apt-get install python3-pip -y
 ```
 
 ### Step 5: Install Jupyter
 1. Install Jupyter (https://jupyter.org/install)
 ```sh 
-		sudo pip3 install jupyter
+sudo pip3 install jupyter
 ```
 ### Step 6: Launch Jupyter
 ```sh 
-		jupyter notebook
+jupyter notebook
 ```
 ![Alt text](pics/LaunchJupyterNotebook.png?raw=true "LaunchJupyterNotebook")		
 	
@@ -81,7 +82,7 @@ jupyter notebook --ip=0.0.0.0
 (https://askubuntu.com/questions/348836/keep-the-running-processes-alive-when-disconneting-the-remote-connection)
 1. **nohup** will run it in another env and & will run it in the background
 ```sh 
-			nohup jupyter notebook --ip=0.0.0.0 &		
+nohup jupyter notebook --ip=0.0.0.0 &		
 ```
 1. So, in the browser you just type: **http://3.210.6.84:8889/login**  (notice that the first part is the public ip of the instance and the port it runs to)
 1. To find your token, in the terminal type: 
