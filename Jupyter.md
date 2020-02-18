@@ -102,18 +102,18 @@ If you want to terminate it, you need to type:  "jupyter notebook stop"
 1. Using **pew**
 	1. Open a new terminal in the Jupyter browser (menu New -> Terminal) and type:
 		```sh
-				pip3 install pew
-				pew new matinapew
+			pip3 install pew
+			pew new matinapew
 	        ```
 	![Alt text](pics/matinapew.png?raw=true "matinapew")
 	2. It takes you to that new launched environment. To get out, type: exit
 	3. To see which environments you have type: 
 		```sh
-				pew ls
+			pew ls
 	        ```
 	4. To change to a virtual environment type:
 		```sh
-				pew workon matinapew
+			pew workon matinapew
 	        ```
 	5. Install a new Python package
 		```sh
@@ -165,7 +165,7 @@ If you want to terminate it, you need to type:  "jupyter notebook stop"
 	```sh
 		 mkdir tmp
 		 cd tmp
-        ```sh
+        ```
 	4. Download the latest anaconda version using:
 	```sh
 			curl -O https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
