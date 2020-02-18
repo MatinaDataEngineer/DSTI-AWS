@@ -121,7 +121,7 @@ If you want to terminate it, you need to type:  "jupyter notebook stop"
 			pip3 install pandas
 			pip3 freeze #(pandas is shown)
 	```
-		![Alt text](pics/withpandas.png?raw=true "withpandas")	
+	![Alt text](pics/withpandas.png?raw=true "withpandas")	
 	6. Open a new terminal and create another environment:
 	```sh
 				pew new matinatf
@@ -138,9 +138,9 @@ If you want to terminate it, you need to type:  "jupyter notebook stop"
 			pip3 install ipykernel
 			python3 -m ipykernel install --user --name=MatinaPewTf
 		```
-	        ![Alt text](pics/VEnvs.png?raw=true "VEnvs")
-		(after reloading the page)
-		Note that we work from the same file directory and Pew takes care of the python environment
+	![Alt text](pics/VEnvs.png?raw=true "VEnvs")
+	(after reloading the page)
+	Note that we work from the same file directory and Pew takes care of the python environment
 	8. Export you environment packages (from the matinapew virtual environment, which contains pandas) into a file:
 	```sh
 			pip3 freeze > matinapewenv.txt
@@ -168,11 +168,11 @@ If you want to terminate it, you need to type:  "jupyter notebook stop"
         ```
 	4. Download the latest anaconda version using:
 	```sh
-			curl -O https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
+		curl -O https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
 	```
 	5. Execute the installation script after making ls:
 	```sh
-			bash Anaconda3-2019.10-Linux-x86_64.sh
+		bash Anaconda3-2019.10-Linux-x86_64.sh
 	```
 	6. Activate the installation with the following command: 
 	```sh
