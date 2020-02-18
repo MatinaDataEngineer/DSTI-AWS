@@ -161,33 +161,30 @@ If you want to terminate it, you need to type:  "jupyter notebook stop"
 	1. Go to anaconda.com/distribution and copy the link for the latest anaconda distribution on linux: 
 	    e.g. https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
 	2. Open a terminal from the Jupyter browser
-	3. Create a temp folder: 
+	3. Create a temp folder and download the latest anaconda version using:
 	```sh
 		 mkdir tmp
 		 cd tmp
-        ```
-	4. Download the latest anaconda version using:
-	```sh
-		curl -O https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
+		 curl -O https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
 	```
-	5. Execute the installation script after making ls:
+	4. Execute the installation script after making ls:
 	```sh
 		bash Anaconda3-2019.10-Linux-x86_64.sh
 	```
-	6. Activate the installation with the following command: 
+	5. Activate the installation with the following command: 
 	```sh
 		source ~/.bashrc
 	```
-	7. Use the conda command to test the installation and activation: conda list
+	6. Use the conda command to test the installation and activation: conda list
 	```sh
 		conda list
 	```
-	8. Create an Anaconda environment of Python 2.7
+	7. Create an Anaconda environment of Python 2.7
 	```sh
 		conda create --name my_envP2.7 python=2.7
 	```
 	(Anaconda allows you to create a virtual environment with other version of Python)
-	9. Activate the Anaconda environment of Python 2.7
+	8. Activate the Anaconda environment of Python 2.7
 	```sh
 		conda activate my_envP2.7
 	```
