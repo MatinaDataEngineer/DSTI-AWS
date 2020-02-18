@@ -73,7 +73,7 @@ jupyter notebook
 1. So, we replace this with our public ip but again it does not work because the port 8888 binds to localhost (127.0.0.0) of the distant machine
 1. So, we need to call Jupyter notebook differently to bind it to every ip possible, which makes it bind to the private ip of the instance, which is automatically connected in the background to ist public ip:
 ```sh 
-jupyter notebook --ip=0.0.0.0
+	jupyter notebook --ip=0.0.0.0
 ```
 1. Now, it works as soon as we replace the ip with the public ip: http://3.210.6.84:8888/?token=f35044e9f6404299471274be805fe006b82db74c25107bbc
 1. From New-> Terminal you can open multiple terminals that stay in your list and are accessible from your browser
@@ -82,16 +82,18 @@ jupyter notebook --ip=0.0.0.0
 (https://askubuntu.com/questions/348836/keep-the-running-processes-alive-when-disconneting-the-remote-connection)
 1. **nohup** will run it in another env and & will run it in the background
 ```sh 
-nohup jupyter notebook --ip=0.0.0.0 &		
+	nohup jupyter notebook --ip=0.0.0.0 &		
 ```
-1. So, in the browser you just type: **http://3.210.6.84:8889/login**  (notice that the first part is the public ip of the instance and the port it runs to)
-1. To find your token, in the terminal type: 
+2. So, in the browser you just type: **http://3.210.6.84:8889/login**  (notice that the first part is the public ip of the instance and the port it runs to)
+3. To find your token, in the terminal type: 
 ```sh
-jupyter notebook list
+	jupyter notebook list
 ```
 ![Alt text](pics/JupiterNohup.png?raw=true "JupiterNohup")
-1. You copy paste the token in the login page of the browser. 
+
+4. You copy paste the token in the login page of the browser. 
 ![Alt text](pics/JupyterLoggedIN.png?raw=true "JupyterLoggedIN")
+
 The Jupyter remains accessible, even if the ssh terminal connections dies. 
 (you could also find it if you do ls and then cat nohup.out)
 If you want to terminate it, you need to type:  "jupyter notebook stop"
@@ -103,7 +105,7 @@ If you want to terminate it, you need to type:  "jupyter notebook stop"
 				pip3 install pew
 				pew new matinapew
 	        ```
-		![Alt text](pics/matinapew.png?raw=true "matinapew")
+	![Alt text](pics/matinapew.png?raw=true "matinapew")
 	2. It takes you to that new launched environment. To get out, type: exit
 	3. To see which environments you have type: 
 		```sh
