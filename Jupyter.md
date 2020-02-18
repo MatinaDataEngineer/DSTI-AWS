@@ -101,32 +101,32 @@ If you want to terminate it, you need to type:  "jupyter notebook stop"
 ### Step 9: Create Virtual Python Environments and add them in Jupyter Notebook
 1. Using **pew**
 	1. Open a new terminal in the Jupyter browser (menu New -> Terminal) and type:
-		```sh
+	```sh
 			pip3 install pew
 			pew new matinapew
-	        ```
+	```
 	![Alt text](pics/matinapew.png?raw=true "matinapew")
 	2. It takes you to that new launched environment. To get out, type: exit
 	3. To see which environments you have type: 
-		```sh
+	```sh
 			pew ls
-	        ```
+	```
 	4. To change to a virtual environment type:
-		```sh
+	```sh
 			pew workon matinapew
-	        ```
+	```
 	5. Install a new Python package
-		```sh
+	```sh
 	 		pip3 freeze #lists the python packages you have installed in your environment
 			pip3 install pandas
 			pip3 freeze #(pandas is shown)
-		```
+	```
 		![Alt text](pics/withpandas.png?raw=true "withpandas")	
 	6. Open a new terminal and create another environment:
-		```sh
+	```sh
 				pew new matinatf
 				pip3 freeze # no pandas is shown
-	        ```
+	```
 	7. Add those environments (link them) to the Jupyter Notebook:	
 		i. Go to matinapew virtual environment from the terminal and issue: 
 		```sh
@@ -142,20 +142,20 @@ If you want to terminate it, you need to type:  "jupyter notebook stop"
 		(after reloading the page)
 		Note that we work from the same file directory and Pew takes care of the python environment
 	8. Export you environment packages (from the matinapew virtual environment, which contains pandas) into a file:
-		```sh
+	```sh
 			pip3 freeze > matinapewenv.txt
 			cat matinapewenv.txt
-		```
+	```
 	9. Delete a virtual environment
-		```sh
+	```sh
 			pew rm matinatf
-		```
+	```
 	9. Create a new virtual environment as a clone of matinapewenv.txt:
-		```sh
+	```sh
 			pew new matinapewclone
 			pip3 install -r matinapewenv.txt
 			python3 -m ipykernel install --user --name=MatinaPewEnv2
-		```
+	```
 2. Using **anaconda**
 (https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart)
 	1. Go to anaconda.com/distribution and copy the link for the latest anaconda distribution on linux: 
