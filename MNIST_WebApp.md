@@ -106,7 +106,7 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		```
 	![Alt text](pics/ipython.png?raw=true "ipython")
 	
-		If you refresh the browser page of the Jupyter, you will see the new environment:
+	If you refresh the browser page of the Jupyter, you will see the new environment:
 	![Alt text](pics/newenv.png?raw=true "newenv")
 	
 5. Clone the GitHub repository of Leo to upload all the scripts and data
@@ -144,92 +144,124 @@ Real use case: it has been used in american post office to recognize zip codes.*
 9. Execute now the Notebook by clicking on "Run" button
 	![Alt text](pics/notebookok.png?raw=true "notebookok")
 	
-	The main framework in Deep Learning is TensaFlow (in Cpp), then PyTorch…
-	Keras is a meta-framework and translates everything into TensaFlow, enabling easier syntax
-	Step2: tries to predict 10 classes (pictures 28pix * 28pix = 784 decision variables) and 60k rows. It downloads the minst data (x_train is the data, y_train are the variables 0..9)
-	Step3: multidimentional arrays (matrices). In IT they are arrays inside arrays inside arrays… makes the so-called "tensors" here the dimension is pixes per color (here we have black and white)
-	Step4: Normalizes everything from 0-255 to 0-1. Recasting, making sure that the columns are categorized correctly. (categorical data vs numerical data)
-	Step 5: the answer 0 means wrong and the answer 1 means right. (a vector)
-	Step 6: This is how you build your neural network in layers. Keras is designed to make it simplier. With add we just add a layer. We have a convolutional layer with a kernel 3x3.
-	If you wanted to do the same with Tensor Flow, it is much more difficult. In the end you compile everything.
+	- The main framework in Deep Learning is TensaFlow (in Cpp), then PyTorch…
+	- Keras is a meta-framework and translates everything into TensaFlow, enabling easier syntax
+	- Step2: tries to predict 10 classes (pictures 28pix * 28pix = 784 decision variables) and 60k rows. It downloads the minst data (x_train is the data, y_train are the variables 0..9)
+	- Step3: multidimentional arrays (matrices). In IT they are arrays inside arrays inside arrays… makes the so-called "tensors" here the dimension is pixes per color (here we have black and white)
+	- Step4: Normalizes everything from 0-255 to 0-1. Recasting, making sure that the columns are categorized correctly. (categorical data vs numerical data)
+	- Step 5: the answer 0 means wrong and the answer 1 means right. (a vector)
+	- Step 6: This is how you build your neural network in layers. Keras is designed to make it simplier. With add we just add a layer. We have a convolutional layer with a kernel 3x3. If you wanted to do the same with Tensor Flow, it is much more difficult. In the end you compile everything.
 	
 	![Alt text](pics/compiled.png?raw=true "compiled")
+	
 	It has actually more than 200k parameters!
-	Step 7: we change the number of epochs and times to change the weights. So, we will try to change 10 times these 200k parameters.
-	Step 8: we do fit, we are basically running the whole thing, training our model. From the very first epoch we have reached 97,8% accurracy
-	Step 9. It is the final test: 99.4% accuracy
+	- Step 7: we change the number of epochs and times to change the weights. So, we will try to change 10 times these 200k parameters.
+	- Step 8: we do fit, we are basically running the whole thing, training our model. From the very first epoch we have reached 97,8% accurracy
+	- Step 9. It is the final test: 99.4% accuracy
 	![Alt text](pics/finaltest.png?raw=true "finaltest")
 	
-	Important is to reach the step 14 which does a save of the trained model (which contains the weights) here
+	- Important is to reach the step 14 which does a save of the trained model (which contains the weights) here
 	![Alt text](pics/finaltest.png?raw=true "finaltest")
 	
 	We have finished with 1 and we have successfully saved the trained model (we should normally export it with scp and terminate the instance)
 		
-###Step 2: Save the model and deploy it  on the Flask Application Server (backend) which is a private Ubuntu EC2 Instance (3) (you might need a NAT instance as well) We will use Flask which uses Python, which is an equivalent of NodeJS which uses JavaScript. (the deployable file should be a new keras_flask.py) The saved model is the file: http://18.205.163.6:8888/edit/AWS_Tutorials/MNIST/cnn-mnist
+###Step 2: Save the model and deploy it on the Application Server (**Backend**) which is a **private** Ubuntu EC2 Instance. *We will use Flask which uses Python, which is an equivalent of NodeJS which uses JavaScript. (the deployable file should be a new keras_flask.py) The saved model is the file: http://18.205.163.6:8888/edit/AWS_Tutorials/MNIST/cnn-mnist *
  
-	1) Launch a private Ubuntu EC2 Instance 
-		a. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
-		b. Select **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
-		c. Instance Type: use free tier t2.micro (we will upgrade it later, before training the model)
-		d. VPC: **VPC_A19P1**
-		e. Subnet: **PrivateSubnet1_A19P1**
-		f. Auto-assign IP: **disable**(it is the backend)
-		g. Storage: **16 GB**
-		h. Tag: Name **AI_Backend**
-		i. New Security Group: SG_AI_Backend with 1 Inbound rule:
+	1. Launch a private Ubuntu EC2 Instance 
+		1. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
+		2. Select **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
+		3. Instance Type: use free tier t2.micro (we will upgrade it later, before training the model)
+		4. VPC: **VPC_A19P1**
+		5. Subnet: **PrivateSubnet1_A19P1**
+		6. Auto-assign IP: **disable**(it is the backend)
+		7. Storage: **16 GB**
+		8. Tag: Name **AI_Backend**
+		9. New Security Group: SG_AI_Backend with 1 Inbound rule:
 			i. All traffic from the security group of the Jump Box (Bastion Server): SG_JB_A19P1
-		j. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
-		k. Note the private IP: 11.80.3.156
-	2) Connect with ssh to the AI_Backend over the Jump Box (Bastion Server), which needs to have also a copy of the pem key. 
+		10. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
+		11. Note the private IP: 11.80.3.156
+		
+	2. Connect with ssh to the AI_Backend over the Jump Box (Bastion Server), which needs to have also a copy of the pem key.
+	```sh
 	# connect to the JB
 	ssh -i Downloads/"A19_Project1.pem" ec2-user@18.234.101.88
 	# connect to the AI Backend
 	ssh -i /tmp/"A19_Project1.pem" ubuntu@11.80.3.156
-	3) We move over to the server the folder "static" and the file "index.html" from Leo's GitHub
+	```sh
+	
+	3. We move over to the server the trained model from Leo's GitHub
 	sudo apt-get install git
+	```sh
 	git clone https://github.com/MatinaDataEngineer/AWS_Tutorials.git
-	4) Deploy your API by running the script keras_flask.py (from GitHub)
+	```
+	
+	4. Deploy your API by running the script keras_flask.py (from GitHub)
+	```sh
 		sudo apt-get update
 		sudo apt install python3-pip   # installing pip3
+		# Install Flask
+		pip3 install Flask
+		# Install Imageio
+		sudo apt-get install python3-imageio 
+		# install Keras
+		Pip3 install keras
+		# install TensorFlow
+		pip3 install tensorflow
+		# he also installed opencv
 		cd AWS_Tutorials/MNIST/
-		# pip3 install -r requirements.txt
-		a. Save the model and deploy it  on the Flask Application Server (backend) which is a private Ubuntu EC2 Instance (3) (you might need a NAT instance as well) We will use Flask which uses Python, which is an equivalent of NodeJS which uses JavaScript. (the deployable file should be a new keras_flask.py) The saved model is the file: http://18.205.163.6:8888/edit/AWS_Tutorials/MNIST/cnn-mnist
-		 
-			1) Launch a private Ubuntu EC2 Instance 
-				a. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
-				b. Select **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
-				c. Instance Type: use free tier t2.micro (we will upgrade it later, before training the model)
-				d. VPC: **VPC_A19P1**
-				e. Subnet: **PrivateSubnet1_A19P1**
-				f. Auto-assign IP: **disable**(it is the backend)
-				g. Storage: **16 GB**
-				h. Tag: Name **AI_Backend**
-				i. New Security Group: SG_AI_Backend with 1 Inbound rule:
-					i. All traffic from the security group of the Jump Box (Bastion Server): SG_JB_A19P1
-				j. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
-				k. Note the private IP: 11.80.3.156
-			2) Connect with ssh to the AI_Backend over the Jump Box (Bastion Server), which needs to have also a copy of the pem key. 
-			# connect to the JB
-			ssh -i Downloads/"A19_Project1.pem" ec2-user@18.234.101.88
-			# connect to the AI Backend
-			ssh -i /tmp/"A19_Project1.pem" ubuntu@11.80.3.156
-			3) We move over to the server the folder "static" and the file "index.html" from Leo's GitHub
-			sudo apt-get install git
-			git clone https://github.com/MatinaDataEngineer/AWS_Tutorials.git
-			4) Deploy your API by running the script keras_flask.py (from GitHub)
-				sudo apt-get update
-				sudo apt install python3-pip   # installing pip3
-				# Install Flask
-				pip3 install Flask
-				# Install Imageio
-				sudo apt-get install python3-imageio 
-				# install Keras
-				Pip3 install keras
-				# install TensorFlow
-				pip3 install tensorflow
-				# he also installed opencv
-				cd AWS_Tutorials/MNIST/
-				python3 ./keras_flask.py
+		python3 ./keras_flask.py
+	```
+	
+### Step3: Serve it on a Web Server (**Frontend**) in a **public** EC2 instance
+Create an  EC2 Instance with Apache and copy over the index.html and static folder
+	1. Launch a public UBUNTU EC2 Instance
+		1. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
+		2. Select **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
+		3. Instance Type: use free tier t2.micro (we will upgrade it later, before training the model)
+		4. VPC: **VPC_A19P1**
+		5. Subnet: **PublicSubnet1_A19P1**
+		6. Auto-assign IP: **enable ** 
+		7. Storage: t2.micro
+		8. Advanced Details -> User data:
+			#!/bin/bash -ex
+			yum -y update
+		9. Tag: Name **AI_Frontend**
+		10. New Security Group: **SG_AI_Frontend** (we will configure it later)
+		11. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
+	2. You connect with ssh to it
+	```sh
+	ssh -i Downloads/"A19_Project1.pem" ubuntu@35.173.191.173
+	```
+	3. You need to install Apache server
+	```sh
+	sudo apt-get update
+	sudo apt install apache2
+	sudo systemctl status apache2
+	```
+	4. We move over to the server the folder "static" and the file "index.html" from Leo's GitHub
+	```sh
+	sudo apt-get install git
+	git clone https://github.com/MatinaDataEngineer/AWS_Tutorials.git
+	```
+	5. We replace the starting webpage with our index.html
+	```sh
+	sudo mv AWS_Tutorials/MNIST/index.html /var/www/html/
+	```
+		1. We refresh our page to verify it works:
+	
+	6. We add our static folder to the Apache
+	```sh
+	sudo mv AWS_Tutorials/MNIST/static  /var/www/html/
+	```
+		1. We refresh our page to verify it works:
+		
+	7. You need to modify now the Security Group: SG_AI_Frontend
+		1. Allow Inbound HTTP from Anywhere
+	8. You check if it works by placing the public ip address of the AI_Frontend instance on the browser
+	
+	
+
+### Step 4: combine them
 					From the line 46 and beyond you build an API
 					
 					Here the route is /predict. It needs to send your drawing (after saving it locally) to the Application Server
@@ -241,41 +273,3 @@ Real use case: it has been used in american post office to recognize zip codes.*
 			6) If you open in the AI_Frontend Instance the index.html file
 			 You will need to replace that IP address with the current public IP of the Backend, which needs to receive the POST command. (Since the Backend is in a private subnet, we need to provide here the IP of 
        
-### Step3: Serve it as a web app  (frontend) on a Web Server (Apache) on a public EC2 instance (2)
-Create an UBUNTU EC2 Instance with Apache and copy over the index.html and static folder
-	1) Launch a public EC2 Instance
-		a. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
-		b. Select **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
-		c. Instance Type: use free tier t2.micro (we will upgrade it later, before training the model)
-		d. VPC: **VPC_A19P1**
-		e. Subnet: **PublicSubnet1_A19P1**
-		f. Auto-assign IP: **enable ** 
-		g. Storage: t2.micro
-		h. Advanced Details -> User data:
-			#!/bin/bash -ex
-			yum -y update
-		i. Tag: Name **AI_Frontend**
-		j. New Security Group: SG_AI_Frontend SSH (we will configure it later)
-		k. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
-	2) You connect with ssh to it
-	ssh -i Downloads/"A19_Project1.pem" ubuntu@35.173.191.173
-	3) You need to install Apache server
-	sudo apt-get update
-	sudo apt install apache2
-	sudo systemctl status apache2
-	4) You need to modify now the Security Group: SG_AI_Frontend
-		a. Allow Inbound HTTP from Anywhere
-	5) You check if it works by placing the public ip address of the AI_Frontend instance on the browser
-	
-	6) We move over to the server the folder "static" and the file "index.html" from Leo's GitHub
-	sudo apt-get install git
-	git clone https://github.com/MatinaDataEngineer/AWS_Tutorials.git
-	7) We replace the starting webpage with our index.html
-	sudo mv AWS_Tutorials/MNIST/index.html /var/www/html/
-		a. We refresh our page to verify it works:
-	
-	8) We add our static folder to the Apache
-	sudo mv AWS_Tutorials/MNIST/static  /var/www/html/
-		a. We refresh our page to verify it works:
-
-### Step 4: combine them
