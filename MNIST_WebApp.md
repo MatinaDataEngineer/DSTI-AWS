@@ -62,7 +62,7 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		sudo xfs_growfs -d /dev/xvda1
 		```
 3. Install and configure Jupyter Notebook
-		a. install and run Jupyter Notebook *(after installing Python3 and pip3)*
+	a. install and run Jupyter Notebook *(after installing Python3 and pip3)*
 		```sh
 		sudo yum update -y  #update os packages
 		sudo yum install python3-pip -y
@@ -72,12 +72,12 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		```
 	![Alt text](pics/JupiterNotebookLaunch.png?raw=true "JupiterNotebookLaunch")
 	
-		b. Connect to Jupyter Notebook from the browser by replacing the private ip in the first link from the nohup.out with the public ip of the instance (here: 18.205.163.6)
+	b. Connect to Jupyter Notebook from the browser by replacing the private ip in the first link from the nohup.out with the public ip of the instance (here: 18.205.163.6)
 		http://18.205.163.6:8888/?token=2eebba01bb157a866a6c3ae7ceb31bea0383da62db1d94dd
 	![Alt text](pics/JupyterNotebookBrowser.png?raw=true "JupyterNotebookBrowser")
 	
 4. Configure a virtual anaconda environment of **Python 3.6** within Jupyter
-		a. From the Jupyter Notebook in the browser click on the menu New and then select Terminal and type the following:
+	a. From the Jupyter Notebook in the browser click on the menu New and then select Terminal and type the following:
 		```sh
 		conda create --name my_envP3.6 python=3.6
 		# if you want to remove it use:
@@ -87,15 +87,15 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		```
 	![Alt text](pics/condaenvs.png?raw=true "condaenvs")
 	
-		b. Install nb_conda which updates the conda package
+	b. Install nb_conda which updates the conda package
 		```sh
 		conda install nb_conda
 		```
-		c. Activate your virtual anaconda environment of Python 3.6
+	c. Activate your virtual anaconda environment of Python 3.6
 		```sh
 		conda activate my_envP3.6
 		```
-		d. Add (link) this environment to the Jupyter Notebook:
+	d. Add (link) this environment to the Jupyter Notebook:
 		```sh
 		conda install ipykernel #this package is required for linking
 		jupyter kernelspec list #to list your kernels in jupyter
@@ -108,24 +108,25 @@ Real use case: it has been used in american post office to recognize zip codes.*
 	![Alt text](pics/newenv.png?raw=true "newenv")
 	
 5. Clone the GitHub repository of Leo to upload all the scripts and data
-		a. Install Git
+	a. Install Git
 		```sh
 		sudo yum install git
 		```
-		b. Go to  Leo's GitHub repository https://github.com/leodsti/AWS_Tutorials/tree/master/MNIST
-		c. Click on Fork and click on the green button "Clone or download" and copy the URL: https://github.com/MatinaDataEngineer/AWS_Tutorials.git
-		d. In the terminal of the Jupyter Notebook type
+	b. Go to  Leo's GitHub repository https://github.com/leodsti/AWS_Tutorials/tree/master/MNIST
+	c. Click on Fork and click on the green button "Clone or download" and copy the URL: https://github.com/MatinaDataEngineer/AWS_Tutorials.git
+	d. In the terminal of the Jupyter Notebook type
 		```sh
 		git clone https://github.com/MatinaDataEngineer/AWS_Tutorials.git
 		```
-		e. If we go back to the Jupyter browser and we refresh it, we see that the whole AWS_Tutorials repository is there:
+	e. If we go back to the Jupyter browser and we refresh it, we see that the whole AWS_Tutorials repository is there:
 	![Alt text](pics/Gitrepo.png?raw=true "Gitrepo")
 	
 6. Download the Jupiter Notebook which contains the trained model for MINST of leo: 
-		a. From the cloned repository of AWS_Tutorials inside the Jupyter we select the MNIST folder and we click on the Notebook "00-mnist-cnn.ipynb"
-		b. We get a "Kernel not found" message and we select our virtual environment "Python3.6_tf"
+	a. From the cloned repository of AWS_Tutorials inside the Jupyter we select the MNIST folder and we click on the Notebook "00-mnist-cnn.ipynb"
+	b. We get a "Kernel not found" message and we select our virtual environment "Python3.6_tf"
 	![Alt text](pics/kernelnotfound.png?raw=true "kernelnotfound")
-		c. If we try to execute it, it does not work because we have not yet installed the needed packages in our virtual environment
+	
+	c. If we try to execute it, it does not work because we have not yet installed the needed packages in our virtual environment
 	![Alt text](pics/notebookerror.png?raw=true "notebookerror")
 		
 7. Install in your virtual environment the provided Python environment setup in requirements.txt 
@@ -139,6 +140,7 @@ Real use case: it has been used in american post office to recognize zip codes.*
 
 9. Execute now the Notebook by clicking on "Run" button
 	![Alt text](pics/notebookok.png?raw=true "notebookok")
+	
 	The main framework in Deep Learning is TensaFlow (in Cpp), then PyTorch…
 	Keras is a meta-framework and translates everything into TensaFlow, enabling easier syntax
 	Step2: tries to predict 10 classes (pictures 28pix * 28pix = 784 decision variables) and 60k rows. It downloads the minst data (x_train is the data, y_train are the variables 0..9)
@@ -147,14 +149,17 @@ Real use case: it has been used in american post office to recognize zip codes.*
 	Step 5: the answer 0 means wrong and the answer 1 means right. (a vector)
 	Step 6: This is how you build your neural network in layers. Keras is designed to make it simplier. With add we just add a layer. We have a convolutional layer with a kernel 3x3.
 	If you wanted to do the same with Tensor Flow, it is much more difficult. In the end you compile everything.
+	
 	![Alt text](pics/compiled.png?raw=true "compiled")
 	It has actually more than 200k parameters!
 	Step 7: we change the number of epochs and times to change the weights. So, we will try to change 10 times these 200k parameters.
 	Step 8: we do fit, we are basically running the whole thing, training our model. From the very first epoch we have reached 97,8% accurracy
 	Step 9. It is the final test: 99.4% accuracy
 	![Alt text](pics/finaltest.png?raw=true "finaltest")
+	
 	Important is to reach the step 14 which does a save of the trained model (which contains the weights) here
 	![Alt text](pics/finaltest.png?raw=true "finaltest")
+	
 	We have finished with 1 and we have successfully saved the trained model (we should normally export it with scp and terminate the instance)
 		
 ###Step 2: Save the model and deploy it  on the Flask Application Server (backend) which is a private Ubuntu EC2 Instance (3) (you might need a NAT instance as well) We will use Flask which uses Python, which is an equivalent of NodeJS which uses JavaScript. (the deployable file should be a new keras_flask.py) The saved model is the file: http://18.205.163.6:8888/edit/AWS_Tutorials/MNIST/cnn-mnist
