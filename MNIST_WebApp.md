@@ -52,6 +52,7 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		```sh
 		conda init # if command not found, reconnect with ssh to the instance
 		```
+		
 		*(another solution is to re-install it issuing bash Anaconda3-2019.10-Linux-x86_64.sh -u)*
 		IF there is no disk space left, from the AWS console, you can select the EBS volume and from the Actions menu you can select "Modify volume" and set another size. Then you need to ssh to the server and issue
 		```sh
@@ -62,7 +63,8 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		sudo xfs_growfs -d /dev/xvda1
 		```
 3. Install and configure Jupyter Notebook
-	a. install and run Jupyter Notebook *(after installing Python3 and pip3)*
+	1. install and run Jupyter Notebook *(after installing Python3 and pip3)*
+		
 		```sh
 		sudo yum update -y  #update os packages
 		sudo yum install python3-pip -y
@@ -72,12 +74,12 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		```
 	![Alt text](pics/JupiterNotebookLaunch.png?raw=true "JupiterNotebookLaunch")
 	
-	b. Connect to Jupyter Notebook from the browser by replacing the private ip in the first link from the nohup.out with the public ip of the instance (here: 18.205.163.6)
+	2. Connect to Jupyter Notebook from the browser by replacing the private ip in the first link from the nohup.out with the public ip of the instance (here: 18.205.163.6)
 		http://18.205.163.6:8888/?token=2eebba01bb157a866a6c3ae7ceb31bea0383da62db1d94dd
 	![Alt text](pics/JupyterNotebookBrowser.png?raw=true "JupyterNotebookBrowser")
 	
 4. Configure a virtual anaconda environment of **Python 3.6** within Jupyter
-	a. From the Jupyter Notebook in the browser click on the menu New and then select Terminal and type the following:
+	1. From the Jupyter Notebook in the browser click on the menu New and then select Terminal and type the following:
 		```sh
 		conda create --name my_envP3.6 python=3.6
 		# if you want to remove it use:
@@ -87,15 +89,15 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		```
 	![Alt text](pics/condaenvs.png?raw=true "condaenvs")
 	
-	b. Install nb_conda which updates the conda package
+	2. Install nb_conda which updates the conda package
 		```sh
 		conda install nb_conda
 		```
-	c. Activate your virtual anaconda environment of Python 3.6
+	3. Activate your virtual anaconda environment of Python 3.6
 		```sh
 		conda activate my_envP3.6
 		```
-	d. Add (link) this environment to the Jupyter Notebook:
+	4. Add (link) this environment to the Jupyter Notebook:
 		```sh
 		conda install ipykernel #this package is required for linking
 		jupyter kernelspec list #to list your kernels in jupyter
@@ -108,25 +110,26 @@ Real use case: it has been used in american post office to recognize zip codes.*
 	![Alt text](pics/newenv.png?raw=true "newenv")
 	
 5. Clone the GitHub repository of Leo to upload all the scripts and data
-	a. Install Git
+	1. Install Git
 		```sh
 		sudo yum install git
 		```
-	b. Go to  Leo's GitHub repository https://github.com/leodsti/AWS_Tutorials/tree/master/MNIST
-	c. Click on Fork and click on the green button "Clone or download" and copy the URL: https://github.com/MatinaDataEngineer/AWS_Tutorials.git
-	d. In the terminal of the Jupyter Notebook type
+	2. Go to  Leo's GitHub repository https://github.com/leodsti/AWS_Tutorials/tree/master/MNIST
+	3. Click on Fork and click on the green button "Clone or download" and copy the URL: https://github.com/MatinaDataEngineer/AWS_Tutorials.git
+	
+	4. In the terminal of the Jupyter Notebook type
 		```sh
 		git clone https://github.com/MatinaDataEngineer/AWS_Tutorials.git
 		```
-	e. If we go back to the Jupyter browser and we refresh it, we see that the whole AWS_Tutorials repository is there:
+	5. If we go back to the Jupyter browser and we refresh it, we see that the whole AWS_Tutorials repository is there:
 	![Alt text](pics/Gitrepo.png?raw=true "Gitrepo")
 	
 6. Download the Jupiter Notebook which contains the trained model for MINST of leo: 
-	a. From the cloned repository of AWS_Tutorials inside the Jupyter we select the MNIST folder and we click on the Notebook "00-mnist-cnn.ipynb"
-	b. We get a "Kernel not found" message and we select our virtual environment "Python3.6_tf"
+	1. From the cloned repository of AWS_Tutorials inside the Jupyter we select the MNIST folder and we click on the Notebook "00-mnist-cnn.ipynb"
+	2. We get a "Kernel not found" message and we select our virtual environment "Python3.6_tf"
 	![Alt text](pics/kernelnotfound.png?raw=true "kernelnotfound")
 	
-	c. If we try to execute it, it does not work because we have not yet installed the needed packages in our virtual environment
+	3. If we try to execute it, it does not work because we have not yet installed the needed packages in our virtual environment
 	![Alt text](pics/notebookerror.png?raw=true "notebookerror")
 		
 7. Install in your virtual environment the provided Python environment setup in requirements.txt 
