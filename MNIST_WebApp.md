@@ -71,9 +71,11 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		less nohup.out
 		```
 	![Alt text](pics/JupiterNotebookLaunch.png?raw=true "JupiterNotebookLaunch")
+	
 		b. Connect to Jupyter Notebook from the browser by replacing the private ip in the first link from the nohup.out with the public ip of the instance (here: 18.205.163.6)
 		http://18.205.163.6:8888/?token=2eebba01bb157a866a6c3ae7ceb31bea0383da62db1d94dd
 	![Alt text](pics/JupyterNotebookBrowser.png?raw=true "JupyterNotebookBrowser")
+	
 4. Configure a virtual anaconda environment of **Python 3.6** within Jupyter
 		a. From the Jupyter Notebook in the browser click on the menu New and then select Terminal and type the following:
 		```sh
@@ -84,6 +86,7 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		# conda info --envs
 		```
 	![Alt text](pics/condaenvs.png?raw=true "condaenvs")
+	
 		b. Install nb_conda which updates the conda package
 		```sh
 		conda install nb_conda
@@ -100,8 +103,10 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		ipython kernel install --user --name=Python3.6_tf
 		```
 	![Alt text](pics/ipython.png?raw=true "ipython")
+	
 		If you refresh the browser page of the Jupyter, you will see the new environment:
 	![Alt text](pics/newenv.png?raw=true "newenv")
+	
 5. Clone the GitHub repository of Leo to upload all the scripts and data
 		a. Install Git
 		```sh
