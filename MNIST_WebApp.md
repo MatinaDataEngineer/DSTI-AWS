@@ -20,34 +20,34 @@ Real use case: it has been used in american post office to recognize zip codes.*
 ### Step 1: Install Jupiter on a **public** EC2 instance (**Dev**) and train the Neural Network model 
 *(normally must be done on a GPU machine) We will use keras and tensaflow. After training the model, you shut it down*
 1. Launch a public EC2 Instance
-		a. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
-		b. Select **Amazon Linux 2 AMI (HVM), SSD Volume Type**
-		c. Instance Type: use free tier t2.micro (we will upgrade it later, before training the model)
-		d. VPC: **VPC_A19P1**
-		e. Subnet: **PublicSubnet1_A19P1**
-		f. Auto-assign IP: **enable **(because we will shut it down after training)
-		g. Storage: **16 GB**
-		h. Tag: Name **AI_Dev**
-		i. New Security Group: **SG_AI_Dev** with 2 Inbound rules:
-			i. SSH to port 22 from MyIP
-			ii. Custom TCP to port range 8888-8898 from Anywhere (for Jupyter)
-		j. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
+	1. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
+	2. Select **Amazon Linux 2 AMI (HVM), SSD Volume Type**
+	3. Instance Type: use free tier t2.micro (we will upgrade it later, before training the model)
+	4. VPC: **VPC_A19P1**
+	5. Subnet: **PublicSubnet1_A19P1**
+	6. Auto-assign IP: **enable **(because we will shut it down after training)
+	7. Storage: **16 GB**
+	8. Tag: Name **AI_Dev**
+	9. New Security Group: **SG_AI_Dev** with 2 Inbound rules:
+		i. SSH to port 22 from MyIP
+		ii. Custom TCP to port range 8888-8898 from Anywhere (for Jupyter)
+	10. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
 2. Install on it Anaconda 
-		a. Connect with ssh to your instance
+	1. Connect with ssh to your instance
 		```sh 
 		ssh -i Downloads/"A19_Project1.pem" ec2-user@18.205.163.6
 		```
-		b. Update OS packages
+	2. Update OS packages
 		```sh 
 		sudo yum update -y 
 		```
-		c. install Anaconda distribution for Linux (https://www.anaconda.com/distribution/) (copy link address and paste it to wget)
+	3. install Anaconda distribution for Linux (https://www.anaconda.com/distribution/) (copy link address and paste it to wget)
 		```sh 
 		wget  https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
 		bash Anaconda3-2019.10-Linux-x86_64.sh
 		```
 	![Alt text](pics/InstallingAnaconda.png?raw=true "InstallingAnaconda")
-		d. Check Anaconda
+	4. Check Anaconda
 		```sh
 		conda init # if command not found, reconnect with ssh to the instance
 		```
