@@ -165,7 +165,7 @@ Real use case: it has been used in american post office to recognize zip codes.*
 	
 	We have finished with 1 and we have successfully saved the trained model (we should normally export it with scp and terminate the instance)
 		
-###Step 2: Save the model and deploy it on the Application Server (**Backend**) which is a **private** Ubuntu EC2 Instance. *We will use Flask which uses Python, which is an equivalent of NodeJS which uses JavaScript. (the deployable file should be a new keras_flask.py) The saved model is the file: http://18.205.163.6:8888/edit/AWS_Tutorials/MNIST/cnn-mnist *
+### Step 2: Save the model and deploy it on the Application Server (**Backend**) which is a **private** Ubuntu EC2 Instance. *We will use Flask which uses Python, which is an equivalent of NodeJS which uses JavaScript. (the deployable file should be a new keras_flask.py) The saved model is the file: http://18.205.163.6:8888/edit/AWS_Tutorials/MNIST/cnn-mnist *
  
 	1. Launch a private Ubuntu EC2 Instance 
 		1. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
@@ -238,22 +238,26 @@ Create an  EC2 Instance with Apache and copy over the index.html and static fold
 	sudo apt install apache2
 	sudo systemctl status apache2
 	```
-	4. We move over to the server the folder "static" and the file "index.html" from Leo's GitHub
+	4. Download the Leo's GitHub for the frontend files:
 	```sh
 	sudo apt-get install git
 	git clone https://github.com/MatinaDataEngineer/AWS_Tutorials.git
 	```
-	5. We replace the starting webpage with our index.html
-	```sh
-	sudo mv AWS_Tutorials/MNIST/index.html /var/www/html/
-	```
-		1. We refresh our page to verify it works:
-	
-	6. We add our static folder to the Apache
+	5. We add our static folder to the Apache
 	```sh
 	sudo mv AWS_Tutorials/MNIST/static  /var/www/html/
 	```
-		1. We refresh our page to verify it works:
+		1. We refresh our page to verify it works: 
+	![Alt text](pics/apachestart.png?raw=true "apachestart")
+	6. We replace the starting webpage with our index.html
+	```sh
+	sudo mv AWS_Tutorials/MNIST/index.html /var/www/html/
+	```
+	We refresh our page to verify it works:
+	![Alt text](pics/indexplain.png?raw=true "indexplain")
+	
+	
+
 		
 	7. You need to modify now the Security Group: SG_AI_Frontend
 		1. Allow Inbound HTTP from Anywhere
