@@ -47,6 +47,7 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		bash Anaconda3-2019.10-Linux-x86_64.sh
 		```
 	![Alt text](pics/InstallingAnaconda.png?raw=true "InstallingAnaconda")
+	
 	4. Check Anaconda
 		```sh
 		conda init # if command not found, reconnect with ssh to the instance
