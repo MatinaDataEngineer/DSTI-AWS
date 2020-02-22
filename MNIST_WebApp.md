@@ -223,54 +223,51 @@
 	
 ### Step3: Serve it on a Web Server (**Frontend**) in a **public** EC2 instance <a name="STEP3"></a>
 Create an  EC2 Instance with Apache and copy over the index.html and static folder
-	1. Launch a public UBUNTU EC2 Instance
-		1. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
-		2. Select **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
-		3. Instance Type: use free tier t2.micro (we will upgrade it later, before training the model)
-		4. VPC: **VPC_A19P1**
-		5. Subnet: **PublicSubnet1_A19P1**
-		6. Auto-assign IP: **enable ** 
-		7. Storage: t2.micro
-		8. Advanced Details -> User data:
-			#!/bin/bash -ex
-			yum -y update
-		9. Tag: Name **AI_Frontend**
-		10. New Security Group: **SG_AI_Frontend** (we will configure it later)
-		11. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
-	2. You connect with ssh to it
+1. Launch a public UBUNTU EC2 Instance
+	1. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
+	2. Select **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
+	3. Instance Type: use free tier t2.micro (we will upgrade it later, before training the model)
+	4. VPC: **VPC_A19P1**
+	5. Subnet: **PublicSubnet1_A19P1**
+	6. Auto-assign IP: **enable ** 
+	7. Storage: t2.micro
+	8. Advanced Details -> User data:
+		#!/bin/bash -ex
+		yum -y update
+	9. Tag: Name **AI_Frontend**
+	10. New Security Group: **SG_AI_Frontend** (we will configure it later)
+	11. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
+2. You connect with ssh to it
 	```sh
 	ssh -i Downloads/"A19_Project1.pem" ubuntu@35.173.191.173
 	```
-	3. You need to install Apache server
+3. You need to install Apache server
 	```sh
 	sudo apt-get update
 	sudo apt install apache2
 	sudo systemctl status apache2
 	```
-	4. Download the Leo's GitHub for the frontend files:
+4. Download the Leo's GitHub for the frontend files:
 	```sh
 	sudo apt-get install git
 	git clone https://github.com/MatinaDataEngineer/AWS_Tutorials.git
 	```
-	5. We add our static folder to the Apache
+5. We add our static folder to the Apache
 	```sh
 	sudo mv AWS_Tutorials/MNIST/static  /var/www/html/
 	```
-		1. We refresh our page to verify it works: 
+	1. We refresh our page to verify it works: 
 	![Alt text](pics/apachestart.png?raw=true "apachestart")
-	6. We replace the starting webpage with our index.html
+6. We replace the starting webpage with our index.html
 	```sh
 	sudo mv AWS_Tutorials/MNIST/index.html /var/www/html/
 	```
-	We refresh our page to verify it works:
+	1. We refresh our page to verify it works:
 	![Alt text](pics/indexplain.png?raw=true "indexplain")
-	
-	
-
 		
-	7. You need to modify now the Security Group: SG_AI_Frontend
-		1. Allow Inbound HTTP from Anywhere
-	8. You check if it works by placing the public ip address of the AI_Frontend instance on the browser
+7. You need to modify now the Security Group: SG_AI_Frontend
+	1. Allow Inbound HTTP from Anywhere
+8. You check if it works by placing the public ip address of the AI_Frontend instance on the browser
 	
 	
 
