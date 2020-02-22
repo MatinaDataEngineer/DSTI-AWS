@@ -163,11 +163,12 @@ Training a model on MNIST and consuming it in a Web page.
 	![Alt text](pics/finaltest.png?raw=true "finaltest")
 	
 	- Important is to reach the step 14 which does a save of the trained model (which contains the weights) here
-	![Alt text](pics/finaltest.png?raw=true "finaltest")
+	![Alt text](pics/trainedmodel.png?raw=true "trainedmodel")
 	
-	We have finished with 1 and we have successfully saved the trained model (we should normally export it with scp and terminate the instance)
+	> We have finished with 1 and we have successfully saved the trained model (we should normally export it with scp and terminate the instance)
 		
-### Step 2: Save the model and deploy it on the Application Server (**Backend**) which is a **private** Ubuntu EC2 Instance. *We will use Flask which uses Python, which is an equivalent of NodeJS which uses JavaScript. (the deployable file should be a new keras_flask.py) The saved model is the file: http://18.205.163.6:8888/edit/AWS_Tutorials/MNIST/cnn-mnist *
+### Step 2: Save the model and deploy it on the Application Server (**Backend**) which is a **private** Ubuntu EC2 Instance. 
+>*We will use Flask which uses Python, which is an equivalent of NodeJS which uses JavaScript. (the deployable file should be a new keras_flask.py) The saved model is the file: http://18.205.163.6:8888/edit/AWS_Tutorials/MNIST/cnn-mnist*
  
 	1. Launch a private Ubuntu EC2 Instance 
 		1. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
