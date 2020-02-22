@@ -1,9 +1,11 @@
 # MNIST Web Application
 ## Objective
 Training a model on MNIST and consuming it in a Web page.
-1. Install Jupiter on a **public** EC2 instance (**Dev**) and train the Neural Network model (this instance then terminates)
-2. Save the model and deploy it on the Application Server (**Backend**) which is a **private** Ubuntu EC2 Instance
-3. Serve it as a web app on a Web Server (**Frontend**) in a **public** EC2 instance
+0. [Setup the networking environment](#STEP0)
+1. [Install Jupiter on a **public** EC2 instance (**Dev**) and train the Neural Network model (this instance then terminates)](#STEP0)
+2. [Save the model and deploy it on the Application Server (**Backend**) which is a **private** Ubuntu EC2 Instance](#STEP2)
+3. [Serve it as a web app on a Web Server (**Frontend**) in a **public** EC2 instance](#STEP3)
+4. [Combine](#STEP0)
 
 >*Leo's GitHub is used to provide us with the deployment files:
 >https://github.com/leodsti/AWS_Tutorials/tree/master/MNIST*
@@ -15,10 +17,10 @@ Training a model on MNIST and consuming it in a Web page.
 >Real use case: it has been used in american post office to recognize zip codes.*
 
 
-### Step 0: Setup your Networking Environment in AWS consisting of 1 VPC, 2 Subnets, 1 IGW, 1 NAT
+### Step 0: Setup your Networking Environment in AWS consisting of 1 VPC, 2 Subnets, 1 IGW, 1 NAT <a name="STEP0"></a>
   We will reuse the Networking Environment of Project1, consisting of 1 VPC, 2 Subnets, 1 IGW, 1 Bastion Server, 1 NAT instance and extend it
 
-### Step 1: Install Jupiter on a **public** EC2 instance (**Dev**) and train the Neural Network model 
+### Step 1: Install Jupiter on a **public** EC2 instance (**Dev**) and train the Neural Network model <a name="STEP1"></a> 
 *(normally must be done on a GPU machine) We will use keras and tensaflow. After training the model, you shut it down.*
 1. Launch a public EC2 Instance
 	1. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
@@ -167,7 +169,7 @@ Training a model on MNIST and consuming it in a Web page.
 	
 	> We have finished with 1 and we have successfully saved the trained model (we should normally export it with scp and terminate the instance)
 		
-### Step 2: Save the model and deploy it on the Application Server (**Backend**) which is a **private** Ubuntu EC2 Instance. 
+### Step 2: Save the model and deploy it on the Application Server (**Backend**) which is a **private** Ubuntu EC2 Instance <a name="STEP2"></a> 
 >*We will use Flask which uses Python, which is an equivalent of NodeJS which uses JavaScript. (the deployable file should be a new keras_flask.py) The saved model is the file: http://18.205.163.6:8888/edit/AWS_Tutorials/MNIST/cnn-mnist*
  
 1. Launch a private Ubuntu EC2 Instance 
@@ -215,7 +217,7 @@ Training a model on MNIST and consuming it in a Web page.
 		python3 ./keras_flask.py
 	```
 	
-### Step3: Serve it on a Web Server (**Frontend**) in a **public** EC2 instance
+### Step3: Serve it on a Web Server (**Frontend**) in a **public** EC2 instance <a name="STEP3"></a>
 Create an  EC2 Instance with Apache and copy over the index.html and static folder
 	1. Launch a public UBUNTU EC2 Instance
 		1. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
@@ -268,7 +270,7 @@ Create an  EC2 Instance with Apache and copy over the index.html and static fold
 	
 	
 
-### Step 4: combine them
+### Step 4: combine them <a name="STEP4"></a>
 					From the line 46 and beyond you build an API
 					
 					Here the route is /predict. It needs to send your drawing (after saving it locally) to the Application Server
