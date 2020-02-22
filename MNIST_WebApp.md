@@ -218,6 +218,9 @@
 	```
 	![Alt text](pics/deployed.png?raw=true "deployed")
 	
+5. It runs on port 5000 and it expects traffic (/predict request) from the Frontend server (Web application).
+	1. In the final step, we need to modify the **SG_AI_Backend** by adding another inbound rule to port 5000 from the Frontend.
+	
 ### Step3: Serve it on a Web Server (**Frontend**) in a **public** EC2 instance <a name="STEP3"></a>
 Create an  EC2 Instance with Apache and copy over the index.html and static folder
 	1. Launch a public UBUNTU EC2 Instance
