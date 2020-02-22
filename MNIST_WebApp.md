@@ -269,7 +269,16 @@
 		
 7. You need to modify now the Security Group: SG_AI_Frontend
 	1. Allow Inbound HTTP from Anywhere
-8. You check if it works by placing the public ip address of the AI_Frontend instance on the browser
+	2. Modify SSH to allow it only from your IP
+	
+8. We edit the index.html and we replace the ip of the /predict request to match the private IP of the Backend server: 11.80.3.156
+	```sh
+	vi /var/www/html/index.html
+	```
+	editedwebpage
+ We try to predict a hand-written number but we get the error Connection Timed Out
+ conntimeout
+9. We need to modify the **SG_AI_Backend** by adding another inbound rule to port 5000 from the **SG_AI_Frontend**
 	
 	
 
