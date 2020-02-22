@@ -4,33 +4,34 @@ Training a model on MNIST and consuming it in a Web page.
 1. Install Jupiter on a **public** EC2 instance (**Dev**) and train the Neural Network model (this instance then terminates)
 2. Save the model and deploy it on the Application Server (**Backend**) which is a **private** Ubuntu EC2 Instance
 3. Serve it as a web app on a Web Server (**Frontend**) in a **public** EC2 instance
-Leo's GitHub is used to provide us with the deployment files:
-https://github.com/leodsti/AWS_Tutorials/tree/master/MNIST
 
-*The dataset we will use it is called MNIST and is to be found here: http://yann.lecun.com/exdb/mnist/
-It contains 60k examples of handwritten numbers.
-Use case: write a number from 0 to 9. Using computer vision can it be recognized?
-The web page should allow the user to draw a number.
-Real use case: it has been used in american post office to recognize zip codes.*
+>*Leo's GitHub is used to provide us with the deployment files:
+>https://github.com/leodsti/AWS_Tutorials/tree/master/MNIST*
+
+>*The dataset we will use it is called MNIST and is to be found here: http://yann.lecun.com/exdb/mnist/
+>It contains 60k examples of handwritten numbers.
+>Use case: write a number from 0 to 9. Using computer vision can it be recognized?
+>The web page should allow the user to draw a number.
+>Real use case: it has been used in american post office to recognize zip codes.*
 
 
 ### Step 0: Setup your Networking Environment in AWS consisting of 1 VPC, 2 Subnets, 1 IGW, 1 NAT
   We will reuse the Networking Environment of Project1, consisting of 1 VPC, 2 Subnets, 1 IGW, 1 Bastion Server, 1 NAT instance and extend it
 
 ### Step 1: Install Jupiter on a **public** EC2 instance (**Dev**) and train the Neural Network model 
-*(normally must be done on a GPU machine) We will use keras and tensaflow. After training the model, you shut it down*
+*(normally must be done on a GPU machine) We will use keras and tensaflow. After training the model, you shut it down.*
 1. Launch a public EC2 Instance
 	1. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
 	2. Select **Amazon Linux 2 AMI (HVM), SSD Volume Type**
 	3. Instance Type: use free tier t2.micro (we will upgrade it later, before training the model)
 	4. VPC: **VPC_A19P1**
 	5. Subnet: **PublicSubnet1_A19P1**
-	6. Auto-assign IP: **enable **(because we will shut it down after training)
+	6. Auto-assign IP: **enable**(because we will shut it down after training)
 	7. Storage: **16 GB**
 	8. Tag: Name **AI_Dev**
 	9. New Security Group: **SG_AI_Dev** with 2 Inbound rules:
-		i. SSH to port 22 from MyIP
-		ii. Custom TCP to port range 8888-8898 from Anywhere (for Jupyter)
+		1. SSH to port 22 from MyIP
+		2. Custom TCP to port range 8888-8898 from Anywhere (for Jupyter)
 	10. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
 2. Install on it Anaconda 
 	1. Connect with ssh to your instance
@@ -54,14 +55,14 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		```
 		
 		*(another solution is to re-install it issuing bash Anaconda3-2019.10-Linux-x86_64.sh -u)*
-		IF there is no disk space left, from the AWS console, you can select the EBS volume and from the Actions menu you can select "Modify volume" and set another size. Then you need to ssh to the server and issue
-		```sh
-		lsblk
-		sudo growpart /dev/xvda 1
-		df -h
-		sudo yum install xfsprogs
-		sudo xfs_growfs -d /dev/xvda1
-		```
+		IF there is no disk space left, from the AWS console, you can select the EBS volume and from the Actions menu you can select "Modify volume" and set another size. Then you need to ssh to the server and issue:
+			```sh
+			lsblk
+			sudo growpart /dev/xvda 1
+			df -h
+			sudo yum install xfsprogs
+			sudo xfs_growfs -d /dev/xvda1
+			```
 3. Install and configure Jupyter Notebook
 	1. install and run Jupyter Notebook *(after installing Python3 and pip3)*
 		
@@ -75,10 +76,11 @@ Real use case: it has been used in american post office to recognize zip codes.*
 	![Alt text](pics/JupiterNotebookLaunch.png?raw=true "JupiterNotebookLaunch")
 	
 	2. Connect to Jupyter Notebook from the browser by replacing the private ip in the first link from the nohup.out with the public ip of the instance (here: 18.205.163.6)
-		http://18.205.163.6:8888/?token=2eebba01bb157a866a6c3ae7ceb31bea0383da62db1d94dd
+	
+	*http://18.205.163.6:8888/?token=2eebba01bb157a866a6c3ae7ceb31bea0383da62db1d94dd*
 	![Alt text](pics/JupyterNotebookBrowser.png?raw=true "JupyterNotebookBrowser")
 	
-4. Configure a virtual anaconda environment of **Python 3.6** within Jupyter
+4. Configure a virtual Anaconda environment of **Python 3.6** within Jupyter
 	1. From the Jupyter Notebook in the browser click on the menu New and then select Terminal and type the following:
 		```sh
 		conda create --name my_envP3.6 python=3.6
@@ -106,7 +108,7 @@ Real use case: it has been used in american post office to recognize zip codes.*
 		```
 	![Alt text](pics/ipython.png?raw=true "ipython")
 	
-	If you refresh the browser page of the Jupyter, you will see the new environment:
+		If you refresh the browser page of the Jupyter, you will see the new environment:
 	![Alt text](pics/newenv.png?raw=true "newenv")
 	
 5. Clone the GitHub repository of Leo to upload all the scripts and data
@@ -124,7 +126,7 @@ Real use case: it has been used in american post office to recognize zip codes.*
 	5. If we go back to the Jupyter browser and we refresh it, we see that the whole AWS_Tutorials repository is there:
 	![Alt text](pics/Gitrepo.png?raw=true "Gitrepo")
 	
-6. Download the Jupiter Notebook which contains the trained model for MINST of leo: 
+6. Download the Jupiter Notebook which contains the trained model for MINST of Leo: 
 	1. From the cloned repository of AWS_Tutorials inside the Jupyter we select the MNIST folder and we click on the Notebook "00-mnist-cnn.ipynb"
 	2. We get a "Kernel not found" message and we select our virtual environment "Python3.6_tf"
 	![Alt text](pics/kernelnotfound.png?raw=true "kernelnotfound")
@@ -143,7 +145,7 @@ Real use case: it has been used in american post office to recognize zip codes.*
 
 9. Execute now the Notebook by clicking on "Run" button
 	![Alt text](pics/notebookok.png?raw=true "notebookok")
-	
+	<br>
 	- The main framework in Deep Learning is TensaFlow (in Cpp), then PyTorch…
 	- Keras is a meta-framework and translates everything into TensaFlow, enabling easier syntax
 	- Step2: tries to predict 10 classes (pictures 28pix * 28pix = 784 decision variables) and 60k rows. It downloads the minst data (x_train is the data, y_train are the variables 0..9)
