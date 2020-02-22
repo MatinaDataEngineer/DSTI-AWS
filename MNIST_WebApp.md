@@ -170,21 +170,21 @@ Training a model on MNIST and consuming it in a Web page.
 ### Step 2: Save the model and deploy it on the Application Server (**Backend**) which is a **private** Ubuntu EC2 Instance. 
 >*We will use Flask which uses Python, which is an equivalent of NodeJS which uses JavaScript. (the deployable file should be a new keras_flask.py) The saved model is the file: http://18.205.163.6:8888/edit/AWS_Tutorials/MNIST/cnn-mnist*
  
-	1. Launch a private Ubuntu EC2 Instance 
-		1. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
-		2. Select **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
-		3. Instance Type: use free tier t2.micro (we will upgrade it later, before training the model)
-		4. VPC: **VPC_A19P1**
-		5. Subnet: **PrivateSubnet1_A19P1**
-		6. Auto-assign IP: **disable**(it is the backend)
-		7. Storage: **16 GB**
-		8. Tag: Name **AI_Backend**
-		9. New Security Group: SG_AI_Backend with 1 Inbound rule:
-			i. All traffic from the security group of the Jump Box (Bastion Server): SG_JB_A19P1
-		10. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
-		11. Note the private IP: 11.80.3.156
+1. Launch a private Ubuntu EC2 Instance 
+	1. Go to EC2 Service, to Instances screen and click on "Launch Instance" button
+	2. Select **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
+	3. Instance Type: use free tier t2.micro (we will upgrade it later, before training the model)
+	4. VPC: **VPC_A19P1**
+	5. Subnet: **PrivateSubnet1_A19P1**
+	6. Auto-assign IP: **disable**(it is the backend)
+	7. Storage: **16 GB**
+	8. Tag: Name **AI_Backend**
+	9. New Security Group: SG_AI_Backend with 1 Inbound rule:
+		1. All traffic from the security group of the Jump Box (Bastion Server): SG_JB_A19P1
+	10. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
+	11. Note the private IP: 11.80.3.156
 		
-	2. Connect with ssh to the AI_Backend over the Jump Box (Bastion Server), which needs to have also a copy of the pem key.
+2. Connect with ssh to the AI_Backend over the Jump Box (Bastion Server), which needs to have also a copy of the pem key.
 	```sh
 	# connect to the JB
 	ssh -i Downloads/"A19_Project1.pem" ec2-user@18.234.101.88
@@ -192,13 +192,13 @@ Training a model on MNIST and consuming it in a Web page.
 	ssh -i /tmp/"A19_Project1.pem" ubuntu@11.80.3.156
 	```sh
 	
-	3. We move over to the server the trained model from Leo's GitHub
+3. We move over to the server the trained model from Leo's GitHub
 	sudo apt-get install git
 	```sh
 	git clone https://github.com/MatinaDataEngineer/AWS_Tutorials.git
 	```
 	
-	4. Deploy your API by running the script keras_flask.py (from GitHub)
+4. Deploy your API by running the script keras_flask.py (from GitHub)
 	```sh
 		sudo apt-get update
 		sudo apt install python3-pip   # installing pip3
