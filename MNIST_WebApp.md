@@ -1,11 +1,11 @@
 # MNIST Web Application
-## Objective
-Training a model on MNIST and consuming it in a Web page.
+## Objective: Training a model on MNIST and consuming it in a Web page
+<br>
 0. [Setup the networking environment](#STEP0)
-1. [Install Jupiter on a **public** EC2 instance (**Dev**) and train the Neural Network model (this instance then terminates)](#STEP0)
+1. [Install Jupiter on a **public** EC2 instance (**Dev**) and train the Neural Network model (this instance then terminates)](#STEP1)
 2. [Save the model and deploy it on the Application Server (**Backend**) which is a **private** Ubuntu EC2 Instance](#STEP2)
 3. [Serve it as a web app on a Web Server (**Frontend**) in a **public** EC2 instance](#STEP3)
-4. [Combine](#STEP0)
+4. [Combine](#STEP4)
 
 >*Leo's GitHub is used to provide us with the deployment files:
 >https://github.com/leodsti/AWS_Tutorials/tree/master/MNIST*
