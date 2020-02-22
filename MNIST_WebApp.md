@@ -181,7 +181,7 @@
 	6. Auto-assign IP: **disable**(it is the backend)
 	7. Storage: **16 GB**
 	8. Tag: Name **AI_Backend**
-	9. New Security Group: SG_AI_Backend with 1 Inbound rule:
+	9. New Security Group: **SG_AI_Backend** with 1 Inbound rule:
 		1. All traffic from the security group of the Jump Box (Bastion Server): SG_JB_A19P1
 	10. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
 	11. Note the private IP: 11.80.3.156
@@ -195,27 +195,28 @@
 	```sh
 	
 3. We move over to the server the trained model from Leo's GitHub
-	sudo apt-get install git
 	```sh
+	sudo apt-get install git
 	git clone https://github.com/MatinaDataEngineer/AWS_Tutorials.git
 	```
 	
-4. Deploy your API by running the script keras_flask.py (from GitHub)
+4. We deploy our API by running the script keras_flask.py (from GitHub)
 	```sh
-		sudo apt-get update
-		sudo apt install python3-pip   # installing pip3
-		# Install Flask
-		pip3 install Flask
-		# Install Imageio
-		sudo apt-get install python3-imageio 
-		# install Keras
-		Pip3 install keras
-		# install TensorFlow
-		pip3 install tensorflow
-		# he also installed opencv
-		cd AWS_Tutorials/MNIST/
-		python3 ./keras_flask.py
+	sudo apt-get update
+	sudo apt install python3-pip   # installing pip3
+	# Install Flask
+	pip3 install Flask
+	# Install Imageio
+	sudo apt-get install python3-imageio 
+	# install Keras
+	pip3 install keras
+	# install TensorFlow
+	pip3 install tensorflow
+	# he also installed opencv
+	cd AWS_Tutorials/MNIST/
+	python3 ./keras_flask.py &
 	```
+	![Alt text](pics/deployed.png?raw=true "deployed")
 	
 ### Step3: Serve it on a Web Server (**Frontend**) in a **public** EC2 instance <a name="STEP3"></a>
 Create an  EC2 Instance with Apache and copy over the index.html and static folder
