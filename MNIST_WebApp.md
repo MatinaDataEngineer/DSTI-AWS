@@ -319,18 +319,9 @@
 	![Alt text](pics/forwd.png?raw=true "f")
 	7. Reboot NAT instance
 
+11. We now try to predict a handwritten number on our web application:
+![Alt text](pics/predict7.png?raw=true "predict7")
+![Alt text](pics/successminst.png?raw=true "successminst")
 
-	
+*Success!*
 
-### Step 4: combine them <a name="STEP4"></a>
-					From the line 46 and beyond you build an API
-					
-					Here the route is /predict. It needs to send your drawing (after saving it locally) to the Application Server
-					
-					The API listens  on port 5000 (by listening to the private ip)
-				
-			5) We need to be able to accept inbound traffic from the Frontend
-				a. Go to the AI_Backend Instance and change the Inbound rules of ist Security Group by adding a custom TCP route to port 5000 from the Security Group of the AI_Frontend instance
-			6) If you open in the AI_Frontend Instance the index.html file
-			 You will need to replace that IP address with the current public IP of the Backend, which needs to receive the POST command. (Since the Backend is in a private subnet, we need to provide here the IP of 
-       
