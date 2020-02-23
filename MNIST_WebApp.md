@@ -5,7 +5,6 @@
 1. [Install Jupiter on a **public** EC2 instance (**Dev**) and train the Neural Network model (this instance then terminates)](#STEP1)
 2. [Save the model and deploy it on the Application Server (**Backend**) which is a **private** Ubuntu EC2 Instance](#STEP2)
 3. [Serve it as a web app on a Web Server (**Frontend**) in a **public** EC2 instance](#STEP3)
-4. [Combine](#STEP4)
 
 >*Leo's GitHub is used to provide us with the deployment files:
 >https://github.com/leodsti/AWS_Tutorials/tree/master/MNIST*
@@ -281,6 +280,7 @@
 	vi /var/www/html/index.html
 	```
 	![Alt text](pics/editedwebpage.png?raw=true "editedwebpage")
+	
 	2. Mofify the security group of the NAT instance (**SG_NAT_A19P1**) to accept inbound tcp traffic to port 5000 from **Anywhere** and also add a rule  for inbound ssh traffic from my IP
 
 9. The NAT needs to route it to the Backend Instance (on port 5000) and will automaticaly route back the answer.
@@ -304,11 +304,13 @@
 	sudo vi /etc/sysctl.conf
 	```
 	![Alt text](pics/enablingportf.png?raw=true "enablingportf")
+	
 	5. Check if POSTROUTING is enabled in NAT Instance
 	```sh
 	sudo iptables -t nat -v -L POSTROUTING -n --line-number
 	```
 	![Alt text](pics/postrouting.png?raw=true "postrouting")
+	
 	6. Create the new rule for PREROUTING (to destination port and IP of the Backend)
 	```sh
 	sudo iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 5000 -j DNAT --to-destination 11.80.3.156:5000
@@ -317,6 +319,7 @@
 	ip route
 	```
 	![Alt text](pics/forwd.png?raw=true "f")
+	
 	7. Reboot NAT instance
 
 11. We now try to predict a handwritten number on our web application:
