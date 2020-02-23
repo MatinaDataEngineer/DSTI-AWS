@@ -18,7 +18,7 @@
 
 
 ### Step 0: Setup your Networking Environment in AWS consisting of 1 VPC, 2 Subnets, 1 IGW, 1 NAT <a name="STEP0"></a>
-  We will reuse the Networking Environment of Project1, consisting of 1 VPC, 2 Subnets, 1 IGW, 1 Bastion Server, 1 NAT instance and extend it
+  We will reuse the Networking Environment of [A19_Project1](/A19_Project1_Readme.md), consisting of 1 VPC, 2 Subnets, 1 IGW, 1 Bastion Server, 1 NAT instance and extend it
 
 ### Step 1: Install Jupiter on a **public** EC2 instance (**Dev**) and train the Neural Network model <a name="STEP1"></a> 
 *(normally must be done on a GPU machine) We will use keras and tensaflow. After training the model, you shut it down.*
@@ -199,8 +199,11 @@
 	sudo apt-get install git
 	git clone https://github.com/MatinaDataEngineer/AWS_Tutorials.git
 	```
+	>We could alternatively upload our own trained model "cnn-mnist" to the Backend Server (over the JB) after downloading it from the Dev Server with SCP.
+	![Alt text](pics/mytrained.png?raw=true "mytrained")
+
 	
-4. We deploy our API by running the script keras_flask.py (from GitHub)
+4. We prepare our Python Environment and deploy our API by running the script keras_flask.py (WARNING: The script from GitHub does not work. Replace its contents with this script here: [keras_flask_matina.py](/keras_flask_matina.py))
 	```sh
 	sudo apt-get update
 	sudo apt install python3-pip   # installing pip3
@@ -212,7 +215,13 @@
 	pip3 install keras
 	# install TensorFlow
 	pip3 install tensorflow
-	# he also installed opencv
+	# CORS: to configure cross-origin resource sharing in the HTTP nodes because the Backend is in the private subnet and the traffic will be not done directly with the Frontend but through the NAT instance
+	sudo pip3 install -U flask-cors
+	# install a specific version of SciPy to be able to import imresize
+	sudo pip3 install scipy==1.1.0 --user
+	# install opencv
+	sudo pip3 install opencv-python
+	
 	cd AWS_Tutorials/MNIST/
 	python3 ./keras_flask.py &
 	```
