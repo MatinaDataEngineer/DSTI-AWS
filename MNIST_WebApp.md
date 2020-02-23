@@ -227,8 +227,8 @@
 	```
 	![Alt text](pics/deployed.png?raw=true "deployed")
 	
-5. It runs on port 5000 and it expects traffic (/predict request) from the Frontend server (Web application).
-	1. In the final step, we need to modify the **SG_AI_Backend** by adding another inbound rule to port 5000 from the Frontend.
+*It runs on port 5000 and it expects traffic (/predict request) from the Frontend server (Web application).*
+
 	
 ### Step3: Serve it on a Web Server (**Frontend**) in a **public** EC2 instance <a name="STEP3"></a>
 1. Launch a public UBUNTU EC2 Instance
@@ -239,21 +239,16 @@
 	5. Subnet: **PublicSubnet1_A19P1**
 	6. Auto-assign IP: **enable** 
 	7. Storage: t2.micro
-	8. Advanced Details -> User data:
-		```sh
-		#!/bin/bash -ex
-		sudo apt-get -y update
-		```
-	9. Tag: Name **AI_Frontend**
-	10. New Security Group: **SG_AI_Frontend** (we will configure it later)
-	11. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
+	8. Tag: Name **AI_Frontend**
+	9. New Security Group: **SG_AI_Frontend** (we will configure it later)
+	10. Click on Launch Instance (using an existing key pair e.g. A19_Project1.pem)
 2. You connect with ssh to it
 	```sh
 	ssh -i Downloads/"A19_Project1.pem" ubuntu@35.173.191.173
 	```
 3. You need to install Apache server
 	```sh
-	# sudo apt-get update
+	sudo apt-get update
 	sudo apt install apache2
 	sudo systemctl status apache2
 	```
@@ -276,19 +271,55 @@
 	1. We refresh our page to verify it works:
 	![Alt text](pics/indexplain.png?raw=true "indexplain")
 		
-7. You need to modify now the Security Group: SG_AI_Frontend
+7. You need to modify now the Security Group: **SG_AI_Frontend**
 	1. Allow Inbound HTTP from Anywhere
 	2. Modify SSH to allow it only from your IP
 	
-8. We edit the index.html and we replace the ip of the /predict request to match the private IP of the Backend server: 11.80.3.156
+8. Since the Backend is in the private subnet and cannot recieve traffic from the Internet, we will use the NAT Instance to receive the request from the index.html sript from the Frontend (made over the public internet). So, in the script **index.html** we need to add the public IP of the **NAT** 3.83.23.25 and an opened port on the NAT: 5000 used for this.
+	1. Edit the index.html and replace the ip of the /predict request to match the public IP of the NAT instance
 	```sh
 	vi /var/www/html/index.html
 	```
-	editedwebpage
- We try to predict a hand-written number but we get the error Connection Timed Out
- conntimeout
-9. We need to modify the **SG_AI_Backend** by adding another inbound rule to port 5000 from the **SG_AI_Frontend**
+	![Alt text](pics/editedwebpage.png?raw=true "editedwebpage")
+	2. Mofify the security group of the NAT instance (**SG_NAT_A19P1**) to accept inbound tcp traffic to port 5000 from **Anywhere** and also add a rule  for inbound ssh traffic from my IP
+
+9. The NAT needs to route it to the Backend Instance (on port 5000) and will automaticaly route back the answer.
+	1. We need to modify the **SG_AI_Backend** by adding another inbound rule to port 5000 from the **SG_NAT_A19P1**
 	
+10. We configure port-forwarding in the NAT instance
+	1. Connect with ssh to the NAT instance
+	```sh
+	ssh -i Downloads/"A19_Project1.pem" ec2-user@3.83.23.25
+	```
+	2. Find the public network interface (here is eth0)
+	```sh
+	ip route show | grep default
+	```
+	3. Check if port forwarding is enabled in NAT instance
+	```sh
+	sudo sysctl -p
+	```
+	4. Enable it, if necessary by setting "net.ipv4.ip_forward = 1"
+	```sh
+	sudo vi /etc/sysctl.conf
+	```
+	![Alt text](pics/enablingportf.png?raw=true "enablingportf")
+	5. Check if POSTROUTING is enabled in NAT Instance
+	```sh
+	sudo iptables -t nat -v -L POSTROUTING -n --line-number
+	```
+	![Alt text](pics/postrouting.png?raw=true "postrouting")
+	6. Create the new rule for PREROUTING (to destination port and IP of the Backend)
+	```sh
+	sudo iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 5000 -j DNAT --to-destination 11.80.3.156:5000
+	sudo iptables -A FORWARD -p tcp -d 11.80.3.156 --dport 5000 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+	#checking
+	ip route
+	```
+	![Alt text](pics/forwd.png?raw=true "f")
+	7. Reboot NAT instance
+
+
 	
 
 ### Step 4: combine them <a name="STEP4"></a>
