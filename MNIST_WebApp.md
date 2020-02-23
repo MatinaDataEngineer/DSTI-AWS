@@ -203,7 +203,7 @@
 	![Alt text](pics/mytrained.png?raw=true "mytrained")
 
 	
-4. We prepare our Python Environment and deploy our API by running the script keras_flask.py (WARNING: The script from GitHub does not work. Replace its contents with this script here: [keras_flask_matina.py](/keras_flask_matina.py))
+4. We prepare our Python Environment and deploy our API by running the script keras_flask.py (WARNING: The script from GitHub does not work. Replace its contents with this script here: [keras_flask_matina.py](pythonscripts/keras_flask_matina.py))
 	```sh
 	sudo apt-get update
 	sudo apt install python3-pip   # installing pip3
