@@ -1,4 +1,4 @@
-# A19 Project2
+# Connect to a private RDS instance over a private EC2 instance by assuming an IAM role
 ## Objective 
 Using the private RDS MySQL instance created in the private subnet of the AWS architecture of [A19_Project2](/A19_Project2_readme.md), connect using Python, insert data and display it. (We added an optional step to use MySQL client for the same)
 with 
@@ -8,41 +8,53 @@ with
  	-	Availability zone: **us-east-1a**
  	-	(Database port: 3306)
  	-	Password and IAM database authentication
-connect to it over the FI instance by assuming an IAM role with the managed policy: AmazonRDSFullAccess 
+connect to it over the private FI instance by assuming an IAM role with the managed policy: **AmazonRDSFullAccess** 
 *(without using database username and password credentials)*
 >ARN of RDS instance: arn:${Partition}:rds:${Region}:${Account}:{ResourceType}/${Resource}
 e.g. "Resource": "arn:aws:rds:us-west-2:123456789012:db:dbtest"
 All db instances in my account: "Resource": "arn:aws:ec2:us-east-1:123456789012:db:*"
 assume-role* CLI commands.
 
-### Step 1: Create an IAM role that allows Amazon RDS access
+### Step 1: Create a managed policy for full RDS access over IAM Authentication
+1. Open the IAM console, and choose Policies from the navigation panel.
+2. Click on "Create policy"
+3. Click on "Import managed policy"
+4. Type and select AmazonRDSFullAccess and click on "Import"
+5. Under the "IAM" part click on "Add additional permissions", for "Service" type and select "RDS IAM Authentication" and configure it like this:
+	![Alt text](pics/RDSIAMAuthentication.png?raw=true "RDSIAMAuthentication")
+   and for any db-user:
+   	![Alt text](pics/RDSIAMAuthentication2.png?raw=true "RDSIAMAuthentication2")
+6. Click on "Review policy" and give it a Name: **FULL_RDS_ACCESS_OVER_IAM_AUTH**
+7. Click on "Create policy"
 
-1.    Open the IAM console, and choose Roles from the navigation pane.
+### Step 2: Create an EC2 IAM role that allows Amazon RDS access
 
-2.    Choose Create role, choose AWS service, and then choose EC2.
+1.    Open the IAM console, and choose Roles from the navigation panel
 
-3.    For Select your use case, choose EC2, and then choose Next: Permissions.
+2.    Choose "Create role", choose AWS service, and then choose EC2
 
-4.    In the Filter policies drop down, select "Managed". Then, choose the **AmazonRDSFullAccess** policy.
+3.    For Select your use case, choose EC2, and then choose "Next: Permissions"
 
-5.    Choose Next: Review.
+4.    In the "Filter policies" drop down, select **FULL_RDS_ACCESS_OVER_IAM_AUTH** policy by checking the checkbox left of it and click on "Next: Tags" and then on "Next: Review"
 
-6.    For Role Name, enter a name for this IAM role: EC2_TO_RDS  #(e.g. RDS_Full_A19P2)
+5.    For Role Name, enter a name for this IAM role: **EC2_CONNECT_RDS**
 
-7.    Choose Create Role.
-![Alt text](pics/IAM_RDS_Role.png?raw=true "Role")
+6.    For Role Description enter: Allows EC2 instances to connect and to manage any RDS instance in your account.
 
-### Step 2: Connect to the FI Instance (over the Jump Box)
+7.    Choose "Create Role".
+
+
+### Step 3: Connect to the FI Instance (over the Jump Box)
 1. We issue the following command to shh to the Bastion Server (the pem key is saved in the Downloads folder):
 	```sh 
 	ssh -i Downloads/"A19_Project1.pem" ec2-user@18.234.101.88
 	```
 1. From here, we issue the following command to ssh to the FI instance using the copied pem key in our tmp directory:
 	```sh
-	ssh -i /tmp/"A19_Project1.pem" ec2-user@11.80.3.34
+	ssh -i tmp/"A19_Project1.pem" ec2-user@11.80.3.34
 	```
   
-### Step 3: Connect to the RDS using MySQL client and create a database user account to use IAM
+### Step 4: Connect to the RDS using MySQL client and create a database user account to use IAM authentication
 1. From the FI instance we install the MySQL client:
 	```sh
 	sudo yum update
@@ -55,11 +67,13 @@ assume-role* CLI commands.
 	mysql -u admin -p -h dbmysqla19p2.cuzs16qcrkta.us-east-1.rds.amazonaws.com
 	```
   	![Alt text](pics/mysql_client_conn.png?raw=true "MySQLClient")
+	
 3. Create a database user account that uses an AWS authentication token instead of a password:
-	Attention: the specified database account should have the same name as the IAM user or role. (here we use RDS_Full_A19P2) (attention, because we do not use localhost but we connect from a remote server, we put '@'%' )
+	Attention: the specified database account should have the same name as the IAM user or role. (here we use EC2_CONNECT_RDS) (attention, because we do not use localhost but we connect from a remote server, we put '@'%' )
 	```sh
-	CREATE USER RDS_Full_A19P2 IDENTIFIED WITH AWSAuthenticationPlugin as 'RDS';
+	CREATE USER 'EC2_CONNECT_RDS'@'%' IDENTIFIED WITH AWSAuthenticationPlugin as 'RDS';
 	```
+ATTENTION: we have moved over to step "Attach the IAM role to the EC2 instance" skipping the rest
 4. Optionally, run this command to require the user to connect to the database using SSL:
 	```sh
 	ALTER USER 'RDS_Full_A19P2'@'%' REQUIRE SSL;
@@ -141,7 +155,7 @@ aws rds describe-db-instances --query "DBInstances[*].[DBInstanceIdentifier,DbiR
 
 3.    From the Actions menu choose "Instance Settings" and "Attach/Replace IAM role" 
 
-4. 	  Attach your newly created IAM role **RDS_Full_A19P2** to the EC2 instance and click "Apply"
+4. 	  Attach your newly created IAM role **EC2_CONNECT_RDS** to the EC2 instance and click "Apply"
 
 
 ### Step 8: Connect to the FI Instance (over the Jump Box) and download the SSL Certificates
@@ -151,36 +165,37 @@ aws rds describe-db-instances --query "DBInstances[*].[DBInstanceIdentifier,DbiR
 	```
 1. From here, we issue the following command to ssh to the FI instance using the copied pem key in our tmp directory:
 	```sh
-	ssh -i /tmp/"A19_Project1.pem" ec2-user@11.80.3.34
+	ssh -i tmp/"A19_Project1.pem" ec2-user@11.80.3.34
 	```
 1. Download the RDS SSL Certificate pem file
 	```sh
-	mkdir ssl-cert
-	chmod 777 ssl-cert
-	cd ssl-cert
+	mkdir ssl-aws-cert
+	cd ssl-aws-cert
 	wget https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
 	```
 
-## Step 9: Install MySQL Server (the MySQL client is not enough)
-sudo yum install mysql-server
 
 ### Step 9: Generate an AWS authentication token to identify the IAM role
 1.  Use the following AWS CLI command to generate an authentication token. (This token expires within 15 minutes of creation)
 	```sh
-	aws rds generate-db-auth-token --hostname dbmysqla19p2.cuzs16qcrkta.us-east-1.rds.amazonaws.com --port 3306 --region us-east-1 --username db_iam_user
+	aws rds generate-db-auth-token --hostname dbmysqla19p2.cuzs16qcrkta.us-east-1.rds.amazonaws.com --port 3306 --region us-east-1 --username EC2_CONNECT_RDS
 	```
 	RDS_HOST="dbmysqla19p2.cuzs16qcrkta.us-east-1.rds.amazonaws.com"
 	REGION="us-east-1"
-	TOKEN="$(aws rds generate-db-auth-token --hostname ${RDS_HOST} --port 3306 --region ${REGION} --username RDS_Full_A19P2)"
+	TOKEN="$(aws rds generate-db-auth-token --hostname ${RDS_HOST} --port 3306 --region ${REGION} --username EC2_CONNECT_RDS)"
 	
 ### Step 10: Connect to the DB using the IAM authentication token	
-	mysql --host="${RDS_HOST}" \
-	      --port=3306 \
-	      --user=RDS_Full_A19P2 \
-	      --ssl-ca=/home/ec2-user/ssl-cert/rds-combined-ca-bundle.pem \
-	      --ssl-verify-server-cert \
-	      --enable-cleartext-plugin \
-	      --password="$TOKEN"
+mysql --host=$RDSHOST --port=3306 --ssl-ca=/sample_dir/rds-combined-ca-bundle.pem --enable-cleartext-plugin --user=EC2_CONNECT_RDS --password=$TOKEN	
+
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+
+mysql --host="${RDS_HOST}" \
+	    --port=3306 \
+	    --user=EC2_CONNECT_RDS \
+	    --ssl-ca=/home/ec2-user/ssl-aws-cert/rds-combined-ca-bundle.pem \
+	    --ssl-verify-server-cert \
+	    --enable-cleartext-plugin \
+	    --password="$TOKEN"
 
 mysql --host="${RDS_HOST}" \
       --port=3306 \
@@ -244,34 +259,3 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.ht
 mysql -h dbmysqla19p2.cuzs16qcrkta.us-east-1.rds.amazonaws.com --ssl-ca=rds-ca-2019-root.pem --ssl-mode=VERIFY_IDENTITY -p
 mysql -h dbmysqla19p2.cuzs16qcrkta.us-east-1.rds.amazonaws.com --ssl-ca=rds-ca-2019-root.pem -p
 	
-	
-3. We issue the following SQL commands to create data:
-   	- [test.sql](sqlscripts/test.sql)
-   
-4. We issue the following SQL command to retrieve data:
-	```sh
-	Select * from playgroundA19.test_A19;
-	```
-  	![Alt text](pics/SQL_Results1.png?raw=true "SQLResults1")
-
-### Step 5: Connect to the RDS using Python and perform SQL
-1. Being on the FI instance connected, we install Python:
-	```sh
-	sudo yum install python3
-	```
-2. We install a second component PyMSQL we found documented here: https://docs.aws.amazon.com/lambda/latest/dg/services-rds-tutorial.html
-	```sh
-	sudo python3 -m pip install PyMySQL
-	```
-3. We create a folder for our python scripts and we save these 2 python scripts
-  - [A19test.py](pythonscripts/A19test.py)  (make sure to use your own SQL)
-  - [rds_config.py](pythonscripts/rds_config.py) (make sure to use your own connection credencials)
-  ```sh
-	mkdir pythonscripts
-	chmod 777 pythonscripts/
-	cd pythonscripts
-	vim A19test.py
-  	vim rds_config.py
-   ```
-  ![Alt text](pics/python_results.png?raw=true "SQLResults1")
-
