@@ -41,7 +41,7 @@ Create a private RDS MySQL instance in the private subnet of the AWS architectur
 	```
 1. From here, we issue the following command to ssh to the FI instance using the copied pem key in our tmp directory:
 	```sh
-	ssh -i /tmp/"A19_Project1.pem" ec2-user@11.80.3.34
+	ssh -i tmp/"A19_Project1.pem" ec2-user@11.80.3.34
 	```
   
 ### Step 4: Connect to the RDS using MySQL client and perform SQL
